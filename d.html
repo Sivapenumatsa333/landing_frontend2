@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Career Network - Landing</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-white text-gray-800 flex flex-col min-h-screen">
+
+ <!-- Navbar -->
+<nav class="flex items-center justify-between px-6 py-4 shadow">
+  <div class="flex items-center space-x-2">
+    <span class="text-2xl font-bold text-blue-700">YourLogo</span>
+  </div>
+  <div class="space-x-6 hidden md:flex">
+    <a href="#" class="hover:text-blue-600">Jobs</a>
+    <a href="#" class="hover:text-blue-600">People</a>
+    <a href="#" class="hover:text-blue-600">Companies</a>
+    <a href="#" class="hover:text-blue-600">Services</a>
+  </div>
+  <div class="flex items-center space-x-4">
+    <button onclick="openModal('loginModal')" class="border border-blue-600 px-4 py-1 rounded-full text-blue-600 font-medium hover:bg-blue-50">Login</button>
+    
+    <!-- Register Dropdown -->
+    <div class="relative">
+      <button data-toggle="register" onclick="toggleDropdown('registerDropdown')" class="bg-red-500 text-white px-4 py-1 rounded-full font-medium hover:bg-red-600">
+        Register
+      </button>
+      <div id="registerDropdown" class="absolute right-0 mt-2 w-56 bg-white border rounded-lg shadow-lg hidden flex-col z-50">
+        <button onclick="openModal('employeeRegisterModal')" class="text-left px-4 py-2 hover:bg-gray-100 w-full">Employee Registration</button>
+        <button onclick="openModal('employerRegisterModal')" class="text-left px-4 py-2 hover:bg-gray-100 w-full">Employer Registration</button>
+        <button onclick="openModal('recruiterRegisterModal')" class="text-left px-4 py-2 hover:bg-gray-100 w-full">Recruiter Registration</button>
+      </div>
+    </div>
+
+    <!-- For Employers Dropdown -->
+    <div class="relative">
+      <button data-toggle="employer" onclick="toggleDropdown('employerDropdown')" class="flex items-center text-gray-700 font-medium hover:text-blue-600">
+        For Employers 
+        <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        </svg>
+      </button>
+      <div id="employerDropdown" class="absolute right-0 mt-2 w-56 bg-white border rounded-lg shadow-lg hidden flex-col z-50">
+        <a href="#" class="px-4 py-2 hover:bg-gray-100 flex justify-between items-center">
+          Post a Job <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">FREE</span>
+        </a>
+        <button onclick="openModal('employerLoginModal')" class="text-left px-4 py-2 hover:bg-gray-100 w-full">Employer Login</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Employer Login Modal -->
+<div id="employerLoginModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-96">
+    <h2 class="text-2xl font-semibold mb-4">Employer Login</h2>
+    <form id="employerLoginForm" class="space-y-3">
+      <input type="email" id="employerLoginEmail" placeholder="Work Email" class="w-full p-2 border rounded" required>
+      <input type="password" id="employerLoginPassword" placeholder="Password" class="w-full p-2 border rounded" required>
+      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Login</button>
+      <button type="button" onclick="closeModal('employerLoginModal')" class="w-full mt-3 text-gray-600">Cancel</button>
+    </form>
+  </div>
+</div>
+
+
+  <!-- Hero Section -->
+  <section class="grid md:grid-cols-2 items-center px-6 md:px-20 py-12 gap-10 flex-grow">
+    <div>
+      <h1 class="text-4xl md:text-5xl font-semibold mb-6">
+        Connecting talent with opportunity
+      </h1>
+
+<button onclick="window.location.href='https://landing2-jc9n.onrender.com/api/auth/google'"
+  class="w-full md:w-96 flex items-center justify-center space-x-3 border rounded-full py-3 bg-blue-600 text-white font-medium mb-3">
+  <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/google.svg" class="w-6 h-6 bg-white rounded-full p-1" alt="Google">
+  <span>Continue with Google</span>
+</button>
+
+<button onclick="window.location.href='https://landing2-jc9n.onrender.com/api/auth/microsoft'"
+  class="w-full md:w-96 flex items-center justify-center space-x-3 border rounded-full py-3 font-medium mb-3">
+  <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/microsoft.svg" class="w-6 h-6" alt="Microsoft">
+  <span>Continue with Microsoft</span>
+</button>
+
+
+      <p class="mt-6 text-gray-600">
+        New to our network?
+        <button onclick="toggleDropdown('registerDropdown')" class="text-blue-600 font-medium">Join now</button>
+      </p>
+    </div>
+
+    <div class="hidden md:block">
+      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800" alt="Career growth" class="rounded-lg shadow">
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-50 border-t py-10 px-6 md:px-20">
+    <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-sm text-gray-600">
+      <div>
+        <h4 class="font-semibold mb-2">About</h4>
+        <ul class="space-y-1">
+          <li><a href="#" class="hover:text-blue-600">Company</a></li>
+          <li><a href="#" class="hover:text-blue-600">Careers</a></li>
+          <li><a href="#" class="hover:text-blue-600">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-2">Services</h4>
+        <ul class="space-y-1">
+          <li><a href="#" class="hover:text-blue-600">Learnings</a></li>
+          <li><a href="#" class="hover:text-blue-600">Jobs</a></li>
+          <li><a href="#" class="hover:text-blue-600">Resume Builder</a></li>
+          <li><a href="#" class="hover:text-blue-600">Subscription Plans</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-2">Support</h4>
+        <ul class="space-y-1">
+          <li><a href="#" class="hover:text-blue-600">Help Center</a></li>
+          <li><a href="#" class="hover:text-blue-600">Contact Us</a></li>
+          <li><a href="#" class="hover:text-blue-600">Terms</a></li>
+          <li><a href="#" class="hover:text-blue-600">Privacy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-2">Follow Us</h4>
+        <div class="flex space-x-3">
+          <a href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" class="w-6 h-6" alt="LinkedIn"></a>
+          <a href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" class="w-6 h-6" alt="Twitter"></a>
+          <a href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" class="w-6 h-6" alt="Facebook"></a>
+          <a href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" class="w-6 h-6" alt="Instagram"></a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-xs text-gray-500 mt-6">
+      © 2025 Career Network. All rights reserved.
+    </div>
+  </footer>
+
+<!-- Login Modal -->
+<div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-96">
+    <h2 class="text-2xl font-semibold mb-4">Sign In</h2>
+
+    <form id="loginForm" class="space-y-3">
+      <!-- 1. Email -->
+      <input type="email" id="loginEmail" placeholder="Email" class="w-full p-2 border rounded" required>
+      <!-- 2. Password -->
+      <input type="password" id="loginPassword" placeholder="Password" class="w-full p-2 border rounded" required>
+      <!-- 3. Remember Me + Forgot Password -->
+      <div class="flex items-center justify-between text-sm">
+        <label class="flex items-center space-x-2">
+          <input type="checkbox" id="rememberMe" class="h-4 w-4">
+          <span>Remember me</span>
+        </label>
+        <a href="forgot-password.html" class="text-blue-600 hover:underline">Forgot password?</a>
+      </div>
+      <!-- 4. Login -->
+      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Login</button>
+
+      <!-- 5. Cancel -->
+      <button type="button" onclick="closeModal('loginModal')" class="w-full mt-3 text-gray-600">Cancel</button>
+
+      <!-- 6. OR Divider -->
+      <div class="relative flex items-center my-4">
+        <div class="flex-grow border-t border-gray-300"></div>
+        <span class="px-3 text-gray-500 text-sm bg-white">or</span>
+        <div class="flex-grow border-t border-gray-300"></div>
+      </div>
+
+      <!-- 7. Google -->
+      <button onclick="window.location.href='https://landing2-jc9n.onrender.com/api/auth/google'"
+        type="button"
+        class="w-full flex items-center justify-center space-x-3 border rounded-full py-3 bg-red-500 text-white font-medium mb-3">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/google.svg"
+            class="w-6 h-6 bg-white rounded-full p-1" alt="Google">
+        <span>Continue with Google</span>
+      </button>
+
+      <!-- 8. Microsoft -->
+      <button onclick="window.location.href='https://landing2-jc9n.onrender.com/api/auth/microsoft'"
+        type="button"
+        class="w-full flex items-center justify-center space-x-3 border rounded-full py-3 font-medium mb-3">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/microsoft.svg"
+            class="w-6 h-6" alt="Microsoft">
+        <span>Continue with Microsoft</span>
+      </button>
+    </form>
+  </div>
+</div>
+
+
+  <!-- Employee Registration -->
+  <div id="employeeRegisterModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-96">
+      <h2 class="text-2xl font-semibold mb-4">Register as Employee</h2>
+      <form id="employeeRegisterForm" class="space-y-3">
+        <input type="text" id="empName" placeholder="Full Name" class="w-full p-2 border rounded" required>
+        <input type="email" id="empEmail" placeholder="Email ID" class="w-full p-2 border rounded" required>
+        <input type="tel" id="empPhone" placeholder="Mobile Number" class="w-full p-2 border rounded" required>
+        <input type="password" id="empPassword" placeholder="Password" class="w-full p-2 border rounded" required>
+        <input type="text" id="empExperience" placeholder="Years of Experience / Fresher" class="w-full p-2 border rounded">
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Register</button>
+        <button type="button" onclick="closeModal('employeeRegisterModal')" class="w-full mt-3 text-gray-600">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+    <!-- Employer Registration -->
+  <div id="employerRegisterModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-96">
+      <h2 class="text-2xl font-semibold mb-4">Register as Employer</h2>
+      <form id="employerRegisterForm" class="space-y-3">
+        <input type="text" id="employerName" placeholder="Full Name" class="w-full p-2 border rounded" required>
+        <input type="email" id="employerEmail" placeholder="Email ID" class="w-full p-2 border rounded" required>
+        <input type="password" id="employerPassword" placeholder="Password" class="w-full p-2 border rounded" required>
+        <input type="text" id="companyName" placeholder="Company Name" class="w-full p-2 border rounded">
+        <input type="text" id="companyWebsite" placeholder="Website" class="w-full p-2 border rounded">
+        <input type="text" id="gstNumber" placeholder="GST Number" class="w-full p-2 border rounded">
+        <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">Register</button>
+        <button type="button" onclick="closeModal('employerRegisterModal')" class="w-full mt-3 text-gray-600">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- Recruiter Registration -->
+  <div id="recruiterRegisterModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-96">
+      <h2 class="text-2xl font-semibold mb-4">Register as Recruiter</h2>
+      <form id="recruiterRegisterForm" class="space-y-3">
+        <input type="text" id="recruiterName" placeholder="Full Name" class="w-full p-2 border rounded" required>
+        <input type="email" id="recruiterEmail" placeholder="Email ID" class="w-full p-2 border rounded" required>
+        <input type="password" id="recruiterPassword" placeholder="Password" class="w-full p-2 border rounded" required>
+        <input type="text" id="agencyName" placeholder="Agency Name" class="w-full p-2 border rounded">
+        <input type="text" id="specialization" placeholder="Specialization" class="w-full p-2 border rounded">
+        <input type="number" id="yearsExp" placeholder="Years of Experience" class="w-full p-2 border rounded">
+        <button type="submit" class="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700">Register</button>
+        <button type="button" onclick="closeModal('recruiterRegisterModal')" class="w-full mt-3 text-gray-600">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+ <script>
+  function toggleDropdown(id) {
+    document.getElementById(id).classList.toggle("hidden");
+  }
+
+  // Close dropdowns if clicked outside
+  window.addEventListener("click", function (event) {
+    const registerDropdown = document.getElementById("registerDropdown");
+    const employerDropdown = document.getElementById("employerDropdown");
+
+    if (!event.target.closest("#registerDropdown") && !event.target.closest("[data-toggle='register']")) {
+      registerDropdown.classList.add("hidden");
+    }
+    if (!event.target.closest("#employerDropdown") && !event.target.closest("[data-toggle='employer']")) {
+      employerDropdown.classList.add("hidden");
+    }
+  });
+
+  // Modal functions
+  function openModal(id) {
+    document.getElementById(id).classList.remove("hidden");
+    document.getElementById(id).classList.add("flex");
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.add("hidden");
+    document.getElementById(id).classList.remove("flex");
+  }
+
+ // 🔹 Generic redirect helper
+  function redirectByRole(role) {
+    if (role === "employer") {
+      window.location.href = "/employer/dashboard.html";
+    } else if (role === "recruiter") {
+      window.location.href = "/recruiter/dashboard.html";
+    } else {
+      window.location.href = "/employee/dashboard.html";
+    }
+  }
+
+  // 🔹 Handle User Login
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+
+    try {
+      const res = await fetch("http://localhost:4000/api/auth/login/employee", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        alert("✅ Login successful!");
+        closeModal("loginModal");
+        redirectByRole(data.user.role); // backend sends user.role
+      } else {
+        alert("❌ Login failed: " + data.error);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("⚠️ Could not connect to backend.");
+    }
+  });
+  // 🔹 Employee Register
+  document.getElementById("employeeRegisterForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const payload = {
+      name: document.getElementById("empName").value,
+      email: document.getElementById("empEmail").value,
+      phone: document.getElementById("empPhone").value,
+      password: document.getElementById("empPassword").value,
+      work_status: document.getElementById("empExperience").value
+    };
+    try {
+      const res = await fetch("http://localhost:4000/api/auth/register/employee", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (res.ok) { alert("✅ Employee registered!"); closeModal("employeeRegisterModal"); }
+      else { alert("❌ " + data.error); }
+    } catch (err) { alert("⚠️ Backend not reachable."); }
+  });
+
+  // 🔹 Employer Register
+  document.getElementById("employerRegisterForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const payload = {
+      name: document.getElementById("employerName").value,
+      email: document.getElementById("employerEmail").value,
+      password: document.getElementById("employerPassword").value,
+      company_name: document.getElementById("companyName").value,
+      website: document.getElementById("companyWebsite").value,
+      gst_number: document.getElementById("gstNumber").value
+    };
+    try {
+      const res = await fetch("http://localhost:4000/api/auth/register/employer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (res.ok) { alert("✅ Employer registered!"); closeModal("employerRegisterModal"); }
+      else { alert("❌ " + data.error); }
+    } catch (err) { alert("⚠️ Backend not reachable."); }
+  });
+
+  // 🔹 Recruiter Register
+  document.getElementById("recruiterRegisterForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const payload = {
+      name: document.getElementById("recruiterName").value,
+      email: document.getElementById("recruiterEmail").value,
+      password: document.getElementById("recruiterPassword").value,
+      agency_name: document.getElementById("agencyName").value,
+      specialization: document.getElementById("specialization").value,
+      years_experience: document.getElementById("yearsExp").value
+    };
+    try {
+      const res = await fetch("http://localhost:4000/api/auth/register/recruiter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (res.ok) { alert("✅ Recruiter registered!"); closeModal("recruiterRegisterModal"); }
+      else { alert("❌ " + data.error); }
+    } catch (err) { alert("⚠️ Backend not reachable."); }
+  });
+
+  // 🔹 Employer Login
+  document.getElementById("employerLoginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("employerLoginEmail").value;
+    const password = document.getElementById("employerLoginPassword").value;
+    try {
+      const res = await fetch("http://localhost:4000/api/auth/login/employer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        alert("✅ Employer login successful!");
+        closeModal("employerLoginModal");
+        redirectByRole(data.user.role);
+      } else {
+        alert("❌ Login failed: " + data.error);
+      }
+    } catch (err) { alert("⚠️ Backend not reachable."); }
+  });;
+</script>
+
+</body>
+</html>
