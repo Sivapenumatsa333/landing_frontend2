@@ -73,13 +73,13 @@
         Connecting talent with opportunity
       </h1>
 
-<button onclick="window.location.href='http://localhost:4000/api/auth/google'"
+<button onclick="window.location.href='https://landing-render-1.onrender.com/api/auth/google'"
   class="w-full md:w-96 flex items-center justify-center space-x-3 border rounded-full py-3 bg-blue-600 text-white font-medium mb-3">
   <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/google.svg" class="w-6 h-6 bg-white rounded-full p-1" alt="Google">
   <span>Continue with Google</span>
 </button>
 
-<button onclick="window.location.href='http://localhost:4000/api/auth/microsoft'"
+<button onclick="window.location.href='https://landing-render-1.onrender.com/api/auth/microsoft'"
   class="w-full md:w-96 flex items-center justify-center space-x-3 border rounded-full py-3 font-medium mb-3">
   <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/microsoft.svg" class="w-6 h-6" alt="Microsoft">
   <span>Continue with Microsoft</span>
@@ -173,7 +173,7 @@
       </div>
 
       <!-- 7. Google -->
-      <button onclick="window.location.href='http://localhost:4000/api/auth/google'"
+      <button onclick="window.location.href='https://landing-render-1.onrender.com/api/auth/google'"
         type="button"
         class="w-full flex items-center justify-center space-x-3 border rounded-full py-3 bg-red-500 text-white font-medium mb-3">
         <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/google.svg"
@@ -182,7 +182,7 @@
       </button>
 
       <!-- 8. Microsoft -->
-      <button onclick="window.location.href='http://localhost:4000/api/auth/microsoft'"
+      <button onclick="window.location.href='https://landing-render-1.onrender.com/api/auth/microsoft'"
         type="button"
         class="w-full flex items-center justify-center space-x-3 border rounded-full py-3 font-medium mb-3">
         <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/microsoft.svg"
@@ -292,7 +292,7 @@
     const password = document.getElementById("loginPassword").value;
 
     try {
-      const res = await fetch("http://localhost:4000/api/auth/login/employee", {
+      const res = await fetch("https://landing-render-1.onrender.com/api/auth/login/employee", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -322,7 +322,7 @@
       work_status: document.getElementById("empExperience").value
     };
     try {
-      const res = await fetch("http://localhost:4000/api/auth/register/employee", {
+      const res = await fetch("https://landing-render-1.onrender.com/api/auth/register/employee", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -345,7 +345,7 @@
       gst_number: document.getElementById("gstNumber").value
     };
     try {
-      const res = await fetch("http://localhost:4000/api/auth/register/employer", {
+      const res = await fetch("https://landing-render-1.onrender.com/api/auth/register/employer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -368,7 +368,7 @@
       years_experience: document.getElementById("yearsExp").value
     };
     try {
-      const res = await fetch("http://localhost:4000/api/auth/register/recruiter", {
+      const res = await fetch("https://landing-render-1.onrender.com/api/auth/register/recruiter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -385,7 +385,7 @@
     const email = document.getElementById("employerLoginEmail").value;
     const password = document.getElementById("employerLoginPassword").value;
     try {
-      const res = await fetch("http://localhost:4000/api/auth/login/employer", {
+      const res = await fetch("https://landing-render-1.onrender.com/api/auth/login/employer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
