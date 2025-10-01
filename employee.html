@@ -1072,55 +1072,54 @@
 
 
     
-    // ================== PROFILE LOADING FUNCTION ==================
-    async function loadUserProfile() {
-        try {
-            // Set loading state
-            document.getElementById('profileName').classList.add('loading');
-            document.getElementById('profileTitle').classList.add('loading');
-            document.getElementById('profileLocation').classList.add('loading');
+async function loadUserProfile() {
+    try {
+        console.log('🔍 Loading user profile...');
+        
+        const response = await fetch("https://landing-render-1.onrender.com/api/employee/profile", {
+            method: "GET",
+            credentials: "include" // This sends cookies
+        });
+        
+        console.log('📊 Response status:', response.status);
+        
+        if (response.status === 200) {
+            const profileData = await response.json();
+            console.log('✅ Profile data received:', profileData);
             
-            // Use cookies only - no localStorage for authentication
-            const response = await fetch("https://landing-render-1.onrender.com/api/employee/profile", {
-                credentials: "include" // This sends cookies automatically
-            });
+            // Update the UI with the actual data
+            const initials = profileData.name
+                .split(' ')
+                .map(n => n[0])
+                .join('')
+                .toUpperCase();
             
-            // Remove loading state
+            document.getElementById('profileAvatar').textContent = initials;
+            document.getElementById('profileName').textContent = profileData.name;
+            document.getElementById('profileTitle').textContent = profileData.headline || "Professional";
+            document.getElementById('profileLocation').textContent = profileData.location || 'Location not specified';
+            document.getElementById('profileConnections').textContent = profileData.connections || 0;
+            document.getElementById('profileViews').textContent = profileData.profile_views || 0;
+            document.getElementById('postAvatar').textContent = initials;
+            
+            // Remove loading states
             document.getElementById('profileName').classList.remove('loading');
             document.getElementById('profileTitle').classList.remove('loading');
             document.getElementById('profileLocation').classList.remove('loading');
             
-            if (response.ok) {
-                const profileData = await response.json();
-                
-                // Generate initials from name
-                const initials = profileData.name
-                    .split(' ')
-                    .map(n => n[0])
-                    .join('')
-                    .toUpperCase();
-                
-                // Update all profile elements
-                document.getElementById('profileAvatar').textContent = initials;
-                document.getElementById('profileName').textContent = profileData.name;
-                document.getElementById('profileTitle').textContent = profileData.headline || "Professional";
-                document.getElementById('profileLocation').textContent = profileData.location || 'Location not specified';
-                document.getElementById('profileConnections').textContent = profileData.connections || 0;
-                document.getElementById('profileViews').textContent = profileData.profile_views || 0;
-                document.getElementById('postAvatar').textContent = initials;
-                
-            } else if (response.status === 401) {
-                // User not authenticated, redirect to landing page
-                window.location.href = 'd.html';
-            } else {
-                console.error('Failed to fetch profile data');
-                showErrorMessage('Failed to load profile data');
-            }
-        } catch (error) {
-            console.error('Error fetching profile:', error);
-            showErrorMessage('Network error loading profile');
+        } else if (response.status === 401) {
+            console.warn('❌ Unauthorized - redirecting to login');
+            window.location.href = 'index.html';
+        } else {
+            console.error('🚨 Unexpected status:', response.status);
+            // Don't redirect on other errors, just show message
+            showErrorMessage('Failed to load profile data');
         }
+    } catch (error) {
+        console.error('💥 Network error:', error);
+        showErrorMessage('Network error loading profile');
     }
+}
 
     function showErrorMessage(message) {
         // Create a temporary error message
@@ -1152,3 +1151,4 @@
 </script>
 </body>
 </html>
+
