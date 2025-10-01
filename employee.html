@@ -688,7 +688,7 @@
     <header>
         <div class="container">
             <div class="header-top">
-                <div class="logo">JobPortal</div>
+                <div class="logo">LinkedIn</div>
                 
                 <div class="search-bar">
                     <input type="text" placeholder="Search">
@@ -766,7 +766,7 @@
         </div>
         
         <ul class="mobile-nav">
-            <li><a href="profile2.html"><i class="fas fa-user"></i> Profile</a></li>
+            <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
             <li><a href="#"><i class="fas fa-chart-line"></i> Profile Performance</a></li>
             <li><a href="#"><i class="fas fa-briefcase"></i> Services</a></li>
             <li><a href="#"><i class="fas fa-globe"></i> Language</a></li>
@@ -1051,12 +1051,12 @@
             // Clear any localStorage tokens
             localStorage.removeItem("authToken");
             // Redirect to landing page after successful logout
-            window.location.href = "index.html";
+            window.location.href = "d.html";
         })
         .catch(err => {
             console.error("Logout error:", err);
             // Still redirect even if there's an error
-            window.location.href = "index.html";
+            window.location.href = "d.html";
         });
     }
     
@@ -1111,7 +1111,7 @@
                 
             } else if (response.status === 401) {
                 // User not authenticated, redirect to landing page
-                window.location.href = 'index.html';
+                window.location.href = 'd.html';
             } else {
                 console.error('Failed to fetch profile data');
                 showErrorMessage('Failed to load profile data');
@@ -1151,7 +1151,4 @@
     });
 </script>
 </body>
-
 </html>
-
-
