@@ -6,6 +6,7 @@
     <title>My Profile - Career Network</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* All existing CSS styles remain the same */
         * {
             margin: 0;
             padding: 0;
@@ -676,6 +677,205 @@
             100% { opacity: 0.6; }
         }
         
+        /* NEW STYLES FOR EDITABLE ELEMENTS AND MODALS */
+        
+        /* Editable inline styles */
+        .editable-text {
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        
+        .editable-text:hover {
+            background-color: #f3f2ef;
+        }
+        
+        .editable-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: inherit;
+            font-family: inherit;
+            margin-bottom: 5px;
+        }
+        
+        .editable-textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: inherit;
+            font-family: inherit;
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .editable-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .editable-save {
+            background: #0a66c2;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .editable-cancel {
+            background: #f3f2ef;
+            color: #666;
+            border: 1px solid #ddd;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        /* Modal styles for forms */
+        .form-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .form-modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .form-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-modal-title {
+            font-size: 20px;
+            color: #0a66c2;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            font-family: inherit;
+        }
+        
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-col {
+            flex: 1;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .form-submit {
+            background: #0a66c2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .form-cancel {
+            background: transparent;
+            color: #666;
+            border: 1px solid #ddd;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        
+        .checkbox-label {
+            font-weight: normal;
+            margin-bottom: 0;
+        }
+        
+        /* Empty section styles */
+        .empty-section {
+            text-align: center;
+            padding: 30px 0;
+            color: #666;
+        }
+        
+        .empty-section i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+        
+        .add-first-btn {
+            background: #0a66c2;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 16px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-top: 15px;
+        }
+        
         /* Responsive Design */
         @media (max-width: 992px) {
             .nav-menu {
@@ -733,11 +933,16 @@
             .services-columns {
                 flex-direction: column;
             }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header (same as employee.html) -->
+    <!-- Header -->
     <header>
         <div class="container">
             <div class="header-top">
@@ -748,7 +953,7 @@
                 </div>
                 
                 <ul class="nav-menu">
-                    <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="employee.html"><i class="fas fa-home"></i> Home</a></li>
                     <li class="dropdown">
                         <div class="dropdown-toggle" id="servicesDropdown">
                             <i class="fas fa-briefcase"></i> Services <i class="fas fa-chevron-down"></i>
@@ -820,15 +1025,15 @@
         </div>
         
         <ul class="mobile-nav">
-            <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
+            <li><a href="employee.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="profile.html" id="profileLink"><i class="fas fa-user"></i> Profile</a></li>
             <li><a href="#"><i class="fas fa-chart-line"></i> Profile Performance</a></li>
             <li><a href="#"><i class="fas fa-briefcase"></i> Services</a></li>
             <li><a href="#"><i class="fas fa-globe"></i> Language</a></li>
             <li><a href="#"><i class="fas fa-bell"></i> Notifications</a></li>
             <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
             <li><a href="#"><i class="fas fa-question-circle"></i> Help</a></li>
-            <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            <li><a href="#" id="logoutLink"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
         </ul>
     </div>
     
@@ -891,7 +1096,7 @@
                             </div>
                         </div>
                         <div class="profile-actions">
-                            <button class="btn-primary">
+                            <button class="btn-primary" id="addProfileSectionBtn">
                                 <i class="fas fa-plus"></i> Add Profile Section
                             </button>
                             <button class="btn-secondary">
@@ -900,22 +1105,22 @@
                         </div>
                     </div>
                     
-                    <h1 id="profileName">John Doe</h1>
-                    <h3 id="profileTitle">Senior Software Engineer at TechCorp</h3>
-                    <p id="profileLocation">San Francisco, California, United States • <a href="#">Contact info</a></p>
-                    <p id="profileConnections">500+ connections</p>
+                    <h1 id="profileName">Loading...</h1>
+                    <h3 id="profileTitle" class="editable-text" data-field="headline"></h3>
+                    <p id="profileLocation" class="editable-text" data-field="location"></p>
+                    <p id="profileConnections"></p>
                     
                     <div class="profile-stats">
                         <div class="stat-item">
-                            <div class="stat-number">5</div>
+                            <div class="stat-number" id="experienceCount">0</div>
                             <div class="stat-label">Years Experience</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">12</div>
+                            <div class="stat-number" id="skillsCount">0</div>
                             <div class="stat-label">Skills</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">3</div>
+                            <div class="stat-number" id="certificationsCount">0</div>
                             <div class="stat-label">Certifications</div>
                         </div>
                     </div>
@@ -930,56 +1135,21 @@
                     <div class="profile-section">
                         <div class="section-header">
                             <h3 class="section-title">About</h3>
-                            <button class="add-btn">Edit</button>
+                            <button class="add-btn" id="editAboutBtn">Edit</button>
                         </div>
-                        <p>Passionate software engineer with 5+ years of experience in developing scalable web applications. Specialized in JavaScript, React, Node.js, and cloud technologies. Strong problem-solving skills and ability to work in agile environments.</p>
+                        <div id="aboutContent">
+                            <p id="profileAbout" class="editable-text" data-field="about"></p>
+                        </div>
                     </div>
 
                     <!-- Experience Section -->
                     <div class="profile-section">
                         <div class="section-header">
                             <h3 class="section-title">Experience</h3>
-                            <button class="add-btn">Add</button>
+                            <button class="add-btn" id="addExperienceBtn">Add</button>
                         </div>
-                        
-                        <div class="experience-item">
-                            <div class="item-header">
-                                <div class="company-logo">
-                                    <i class="fas fa-building"></i>
-                                </div>
-                                <div class="item-content">
-                                    <div class="item-title">Senior Software Engineer</div>
-                                    <div class="item-subtitle">TechCorp • Full-time</div>
-                                    <div class="item-date">Jan 2020 - Present • 3 yrs 10 mos</div>
-                                    <div class="item-subtitle">San Francisco, California</div>
-                                </div>
-                                <div class="edit-icon">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </div>
-                            </div>
-                            <div class="item-description">
-                                Leading development of customer-facing web applications. Mentoring junior developers and implementing best practices for code quality and deployment.
-                            </div>
-                        </div>
-
-                        <div class="experience-item">
-                            <div class="item-header">
-                                <div class="company-logo">
-                                    <i class="fas fa-building"></i>
-                                </div>
-                                <div class="item-content">
-                                    <div class="item-title">Software Engineer</div>
-                                    <div class="item-subtitle">StartUp Inc • Full-time</div>
-                                    <div class="item-date">Jun 2018 - Dec 2019 • 1 yr 7 mos</div>
-                                    <div class="item-subtitle">San Francisco, California</div>
-                                </div>
-                                <div class="edit-icon">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </div>
-                            </div>
-                            <div class="item-description">
-                                Developed and maintained React applications. Collaborated with design team to implement user interfaces. Optimized application performance.
-                            </div>
+                        <div id="experienceList">
+                            <!-- Experience items will be dynamically inserted here -->
                         </div>
                     </div>
 
@@ -987,41 +1157,10 @@
                     <div class="profile-section">
                         <div class="section-header">
                             <h3 class="section-title">Education</h3>
-                            <button class="add-btn">Add</button>
+                            <button class="add-btn" id="addEducationBtn">Add</button>
                         </div>
-                        
-                        <div class="education-item">
-                            <div class="item-header">
-                                <div class="company-logo">
-                                    <i class="fas fa-graduation-cap"></i>
-                                </div>
-                                <div class="item-content">
-                                    <div class="item-title">Stanford University</div>
-                                    <div class="item-subtitle">Master of Science in Computer Science</div>
-                                    <div class="item-date">2016 - 2018</div>
-                                    <div class="item-subtitle">GPA: 3.8/4.0</div>
-                                </div>
-                                <div class="edit-icon">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="education-item">
-                            <div class="item-header">
-                                <div class="company-logo">
-                                    <i class="fas fa-graduation-cap"></i>
-                                </div>
-                                <div class="item-content">
-                                    <div class="item-title">University of California</div>
-                                    <div class="item-subtitle">Bachelor of Science in Computer Engineering</div>
-                                    <div class="item-date">2012 - 2016</div>
-                                    <div class="item-subtitle">GPA: 3.6/4.0</div>
-                                </div>
-                                <div class="edit-icon">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </div>
-                            </div>
+                        <div id="educationList">
+                            <!-- Education items will be dynamically inserted here -->
                         </div>
                     </div>
 
@@ -1029,17 +1168,11 @@
                     <div class="profile-section">
                         <div class="section-header">
                             <h3 class="section-title">Skills & Endorsements</h3>
-                            <button class="add-btn">Add</button>
+                            <button class="add-btn" id="addSkillBtn">Add</button>
                         </div>
-                        
-                        <div class="skill-pill">JavaScript <span class="endorsement-count">✓ 24</span></div>
-                        <div class="skill-pill">React <span class="endorsement-count">✓ 18</span></div>
-                        <div class="skill-pill">Node.js <span class="endorsement-count">✓ 15</span></div>
-                        <div class="skill-pill">Python <span class="endorsement-count">✓ 12</span></div>
-                        <div class="skill-pill">AWS <span class="endorsement-count">✓ 10</span></div>
-                        <div class="skill-pill">MongoDB <span class="endorsement-count">✓ 8</span></div>
-                        <div class="skill-pill">Docker <span class="endorsement-count">✓ 7</span></div>
-                        <div class="skill-pill">Kubernetes <span class="endorsement-count">✓ 5</span></div>
+                        <div id="skillsList">
+                            <!-- Skills will be dynamically inserted here -->
+                        </div>
                     </div>
                 </div>
 
@@ -1049,13 +1182,10 @@
                     <div class="profile-section">
                         <div class="section-header">
                             <h3 class="section-title">Contact Information</h3>
-                            <button class="add-btn">Edit</button>
+                            <button class="add-btn" id="editContactBtn">Edit</button>
                         </div>
-                        <div class="contact-info">
-                            <p><i class="fas fa-envelope"></i> john.doe@email.com</p>
-                            <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
-                            <p><i class="fas fa-link"></i> linkedin.com/in/johndoe</p>
-                            <p><i class="fas fa-globe"></i> johndoeportfolio.com</p>
+                        <div class="contact-info" id="contactInfo">
+                            <!-- Contact info will be dynamically inserted here -->
                         </div>
                     </div>
 
@@ -1063,13 +1193,10 @@
                     <div class="profile-section">
                         <div class="section-header">
                             <h3 class="section-title">Personal Details</h3>
-                            <button class="add-btn">Edit</button>
+                            <button class="add-btn" id="editPersonalBtn">Edit</button>
                         </div>
-                        <div class="personal-details">
-                            <p><strong>Date of Birth:</strong> January 15, 1990</p>
-                            <p><strong>Gender:</strong> Male</p>
-                            <p><strong>Marital Status:</strong> Single</p>
-                            <p><strong>Languages:</strong> English (Native), Spanish (Intermediate)</p>
+                        <div class="personal-details" id="personalDetails">
+                            <!-- Personal details will be dynamically inserted here -->
                         </div>
                     </div>
 
@@ -1077,67 +1204,10 @@
                     <div class="profile-section">
                         <div class="section-header">
                             <h3 class="section-title">Certifications</h3>
-                            <button class="add-btn">Add</button>
+                            <button class="add-btn" id="addCertificationBtn">Add</button>
                         </div>
-                        
-                        <div class="certification-item">
-                            <div class="item-header">
-                                <div class="company-logo">
-                                    <i class="fas fa-certificate"></i>
-                                </div>
-                                <div class="item-content">
-                                    <div class="item-title">AWS Certified Solutions Architect</div>
-                                    <div class="item-subtitle">Amazon Web Services</div>
-                                    <div class="item-date">Issued Dec 2022 • Expires Dec 2025</div>
-                                </div>
-                                <div class="edit-icon">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="certification-item">
-                            <div class="item-header">
-                               
-                                <div class="company-logo">
-                                    <i class="fas fa-certificate"></i>
-                                </div>
-                                <div class="item-content">
-                                    <div class="item-title">Google Cloud Professional Developer</div>
-                                    <div class="item-subtitle">Google Cloud</div>
-                                    <div class="item-date">Issued Aug 2021 • Expires Aug 2024</div>
-                                </div>
-                                <div class="edit-icon">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Projects -->
-                    <div class="profile-section">
-                        <div class="section-header">
-                            <h3 class="section-title">Projects</h3>
-                            <button class="add-btn">Add</button>
-                        </div>
-                        
-                        <div class="experience-item">
-                            <div class="item-header">
-                                <div class="company-logo">
-                                    <i class="fas fa-code"></i>
-                                </div>
-                                <div class="item-content">
-                                    <div class="item-title">E-commerce Platform</div>
-                                    <div class="item-subtitle">Personal Project</div>
-                                    <div class="item-date">2022</div>
-                                </div>
-                                <div class="edit-icon">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </div>
-                            </div>
-                            <div class="item-description">
-                                Built a full-stack e-commerce platform using React, Node.js, and MongoDB. Implemented user authentication, payment processing, and admin dashboard.
-                            </div>
+                        <div id="certificationsList">
+                            <!-- Certifications will be dynamically inserted here -->
                         </div>
                     </div>
                 </div>
@@ -1145,111 +1215,1431 @@
         </div>
     </div>
 
-    <script>
-        // Mobile menu functionality
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const closeMenu = document.getElementById('closeMenu');
-        const overlay = document.getElementById('overlay');
-        
-        hamburger.addEventListener('click', () => {
-            mobileMenu.classList.add('active');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-        
-        closeMenu.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-        
-        overlay.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-        
-        // For Business dropdown functionality
-        const businessDropdown = document.getElementById('businessDropdown');
-        const businessMenu = document.getElementById('businessMenu');
-        
-        businessDropdown.addEventListener('click', (e) => {
-            e.stopPropagation();
-            businessMenu.classList.toggle('show');
-        });
-        
-        // Services dropdown functionality
-        const servicesDropdown = document.getElementById('servicesDropdown');
-        const servicesMenu = document.getElementById('servicesMenu');
-        
-        servicesDropdown.addEventListener('click', (e) => {
-            e.stopPropagation();
-            servicesMenu.classList.toggle('show');
-        });
-        
-        // Close dropdowns when clicking elsewhere
-        document.addEventListener('click', () => {
-            businessMenu.classList.remove('show');
-            servicesMenu.classList.remove('show');
-        });
-        
-        // Prevent dropdowns from closing when clicking inside them
-        businessMenu.addEventListener('click', (e) => {
-            e.stopPropagation();
-        });
-        
-        servicesMenu.addEventListener('click', (e) => {
-            e.stopPropagation();
-        });
-        
-        // Basic interactivity for demonstration
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add click handlers to edit buttons
-            const editButtons = document.querySelectorAll('.add-btn, .edit-icon');
-            editButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    alert('Edit functionality will be implemented in the next phase!');
-                });
-            });
-            
-            // Add hover effects
-            const experienceItems = document.querySelectorAll('.experience-item, .education-item');
-            experienceItems.forEach(item => {
-                item.addEventListener('mouseenter', function() {
-                    this.style.backgroundColor = '#fafafa';
-                });
-                item.addEventListener('mouseleave', function() {
-                    this.style.backgroundColor = 'transparent';
-                });
-            });
-            
-            // Simulate loading state
-            simulateProfileLoading();
-        });
-        
-        // Simulate profile loading (frontend only)
-        function simulateProfileLoading() {
-            // Show loading state
-            document.getElementById('profileName').classList.add('loading');
-            document.getElementById('profileTitle').classList.add('loading');
-            document.getElementById('profileLocation').classList.add('loading');
-            
-            // Simulate API call delay
-            setTimeout(() => {
-                // Remove loading state
-                document.getElementById('profileName').classList.remove('loading');
-                document.getElementById('profileTitle').classList.remove('loading');
-                document.getElementById('profileLocation').classList.remove('loading');
-                
-                // Set profile data (in a real app, this would come from an API)
-                document.getElementById('profileName').textContent = 'John Doe';
-                document.getElementById('profileTitle').textContent = 'Senior Software Engineer at TechCorp';
-                document.getElementById('profileLocation').textContent = 'San Francisco, California, United States • Contact info';
-                document.getElementById('profileConnections').textContent = '500+ connections';
-            }, 1500);
-        }
-    </script>
-</body>
+    <!-- Edit Forms Modals -->
+    <!-- About Modal -->
+    <div class="form-modal" id="aboutModal">
+        <div class="form-modal-content">
+            <div class="form-modal-header">
+                <h3 class="form-modal-title">Edit About</h3>
+                <span class="close-modal" data-modal="aboutModal">&times;</span>
+            </div>
+            <form id="aboutForm">
+                <div class="form-group">
+                    <label class="form-label" for="aboutText">About</label>
+                    <textarea class="form-textarea" id="aboutText" name="about" placeholder="Tell us about yourself..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="form-cancel" data-modal="aboutModal">Cancel</button>
+                    <button type="submit" class="form-submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
+    <!-- Experience Modal -->
+    <div class="form-modal" id="experienceModal">
+        <div class="form-modal-content">
+            <div class="form-modal-header">
+                <h3 class="form-modal-title" id="experienceModalTitle">Add Experience</h3>
+                <span class="close-modal" data-modal="experienceModal">&times;</span>
+            </div>
+            <form id="experienceForm">
+                <input type="hidden" id="experienceId" name="id">
+                <div class="form-group">
+                    <label class="form-label" for="experienceTitle">Title</label>
+                    <input type="text" class="form-input" id="experienceTitle" name="title" placeholder="e.g. Software Engineer">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="experienceCompany">Company</label>
+                    <input type="text" class="form-input" id="experienceCompany" name="company" placeholder="e.g. Microsoft">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="experienceLocation">Location</label>
+                    <input type="text" class="form-input" id="experienceLocation" name="location" placeholder="e.g. San Francisco, CA">
+                </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label class="form-label" for="experienceStartDate">Start Date</label>
+                            <input type="month" class="form-input" id="experienceStartDate" name="startDate">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label class="form-label" for="experienceEndDate">End Date</label>
+                            <input type="month" class="form-input" id="experienceEndDate" name="endDate">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="experienceCurrent" name="current">
+                                <label class="checkbox-label" for="experienceCurrent">I currently work here</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="experienceDescription">Description</label>
+                    <textarea class="form-textarea" id="experienceDescription" name="description" placeholder="Describe your responsibilities and achievements..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="form-cancel" data-modal="experienceModal">Cancel</button>
+                    <button type="submit" class="form-submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Education Modal -->
+    <div class="form-modal" id="educationModal">
+        <div class="form-modal-content">
+            <div class="form-modal-header">
+                <h3 class="form-modal-title" id="educationModalTitle">Add Education</h3>
+                <span class="close-modal" data-modal="educationModal">&times;</span>
+            </div>
+            <form id="educationForm">
+                <input type="hidden" id="educationId" name="id">
+                <div class="form-group">
+                    <label class="form-label" for="educationSchool">School</label>
+                    <input type="text" class="form-input" id="educationSchool" name="school" placeholder="e.g. Stanford University">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="educationDegree">Degree</label>
+                    <input type="text" class="form-input" id="educationDegree" name="degree" placeholder="e.g. Bachelor of Science">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="educationField">Field of Study</label>
+                    <input type="text" class="form-input" id="educationField" name="field" placeholder="e.g. Computer Science">
+                </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label class="form-label" for="educationStartDate">Start Date</label>
+                            <input type="month" class="form-input" id="educationStartDate" name="startDate">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label class="form-label" for="educationEndDate">End Date</label>
+                            <input type="month" class="form-input" id="educationEndDate" name="endDate">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="educationCurrent" name="current">
+                                <label class="checkbox-label" for="educationCurrent">I currently study here</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="educationDescription">Description</label>
+                    <textarea class="form-textarea" id="educationDescription" name="description" placeholder="Describe your academic achievements..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="form-cancel" data-modal="educationModal">Cancel</button>
+                    <button type="submit" class="form-submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Skills Modal -->
+    <div class="form-modal" id="skillsModal">
+        <div class="form-modal-content">
+            <div class="form-modal-header">
+                <h3 class="form-modal-title">Add Skills</h3>
+                <span class="close-modal" data-modal="skillsModal">&times;</span>
+            </div>
+            <form id="skillsForm">
+                <div class="form-group">
+                    <label class="form-label" for="skillsInput">Skills (comma separated)</label>
+                    <input type="text" class="form-input" id="skillsInput" name="skills" placeholder="e.g. JavaScript, React, Node.js">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="form-cancel" data-modal="skillsModal">Cancel</button>
+                    <button type="submit" class="form-submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Contact Information Modal -->
+    <div class="form-modal" id="contactModal">
+        <div class="form-modal-content">
+            <div class="form-modal-header">
+                <h3 class="form-modal-title">Edit Contact Information</h3>
+                <span class="close-modal" data-modal="contactModal">&times;</span>
+            </div>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label class="form-label" for="contactEmail">Email</label>
+                    <input type="email" class="form-input" id="contactEmail" name="email" placeholder="your.email@example.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="contactPhone">Phone</label>
+                    <input type="tel" class="form-input" id="contactPhone" name="phone" placeholder="+1 (555) 123-4567">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="contactLinkedIn">LinkedIn Profile</label>
+                    <input type="url" class="form-input" id="contactLinkedIn" name="linkedin" placeholder="https://linkedin.com/in/yourprofile">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="contactWebsite">Website</label>
+                    <input type="url" class="form-input" id="contactWebsite" name="website" placeholder="https://yourwebsite.com">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="form-cancel" data-modal="contactModal">Cancel</button>
+                    <button type="submit" class="form-submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Personal Details Modal -->
+    <div class="form-modal" id="personalModal">
+        <div class="form-modal-content">
+            <div class="form-modal-header">
+                <h3 class="form-modal-title">Edit Personal Details</h3>
+                <span class="close-modal" data-modal="personalModal">&times;</span>
+            </div>
+            <form id="personalForm">
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label class="form-label" for="personalBirthday">Birthday</label>
+                            <input type="date" class="form-input" id="personalBirthday" name="birthday">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label class="form-label" for="personalGender">Gender</label>
+                            <select class="form-select" id="personalGender" name="gender">
+                                <option value="">Select</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="non-binary">Non-binary</option>
+                                <option value="prefer-not-to-say">Prefer not to say</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="personalLanguages">Languages</label>
+                    <input type="text" class="form-input" id="personalLanguages" name="languages" placeholder="e.g. English, Spanish, French">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="personalInterests">Interests</label>
+                    <textarea class="form-textarea" id="personalInterests" name="interests" placeholder="Your hobbies and interests..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="form-cancel" data-modal="personalModal">Cancel</button>
+                    <button type="submit" class="form-submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Certifications Modal -->
+    <div class="form-modal" id="certificationsModal">
+        <div class="form-modal-content">
+            <div class="form-modal-header">
+                <h3 class="form-modal-title" id="certificationsModalTitle">Add Certification</h3>
+                <span class="close-modal" data-modal="certificationsModal">&times;</span>
+            </div>
+            <form id="certificationsForm">
+                <input type="hidden" id="certificationId" name="id">
+                <div class="form-group">
+                    <label class="form-label" for="certificationName">Certification Name</label>
+                    <input type="text" class="form-input" id="certificationName" name="name" placeholder="e.g. AWS Certified Solutions Architect">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="certificationIssuer">Issuing Organization</label>
+                    <input type="text" class="form-input" id="certificationIssuer" name="issuer" placeholder="e.g. Amazon Web Services">
+                </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label class="form-label" for="certificationDate">Issue Date</label>
+                            <input type="month" class="form-input" id="certificationDate" name="issueDate">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label class="form-label" for="certificationExpiry">Expiration Date</label>
+                            <input type="month" class="form-input" id="certificationExpiry" name="expiryDate">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="certificationNoExpiry" name="noExpiry">
+                                <label class="checkbox-label" for="certificationNoExpiry">This credential does not expire</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="certificationCredential">Credential ID (Optional)</label>
+                    <input type="text" class="form-input" id="certificationCredential" name="credentialId" placeholder="e.g. 123456789">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="certificationUrl">Credential URL (Optional)</label>
+                    <input type="url" class="form-input" id="certificationUrl" name="credentialUrl" placeholder="https://example.com/verify/123456789">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="form-cancel" data-modal="certificationsModal">Cancel</button>
+                    <button type="submit" class="form-submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Profile Section Modal -->
+    <div class="form-modal" id="addSectionModal">
+        <div class="form-modal-content">
+            <div class="form-modal-header">
+                <h3 class="form-modal-title">Add Profile Section</h3>
+                <span class="close-modal" data-modal="addSectionModal">&times;</span>
+            </div>
+            <div class="form-group">
+                <p>Select a section to add to your profile:</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;">
+                    <button class="add-section-btn" data-section="experience">Experience</button>
+                    <button class="add-section-btn" data-section="education">Education</button>
+                    <button class="add-section-btn" data-section="skills">Skills</button>
+                    <button class="add-section-btn" data-section="certifications">Certifications</button>
+                    <button class="add-section-btn" data-section="projects">Projects</button>
+                    <button class="add-section-btn" data-section="languages">Languages</button>
+                    <button class="add-section-btn" data-section="volunteering">Volunteering</button>
+                    <button class="add-section-btn" data-section="publications">Publications</button>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="form-cancel" data-modal="addSectionModal">Cancel</button>
+            </div>
+        </div>
+    </div>
+<script>
+const API_BASE = "https://landing-render-1.onrender.com/api";
+
+// DOM Elements
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+const overlay = document.getElementById('overlay');
+const closeMenu = document.getElementById('closeMenu');
+const servicesDropdown = document.getElementById('servicesDropdown');
+const servicesMenu = document.getElementById('servicesMenu');
+const businessDropdown = document.getElementById('businessDropdown');
+const businessMenu = document.getElementById('businessMenu');
+
+// Profile Edit Elements
+const editAboutBtn = document.getElementById('editAboutBtn');
+const addExperienceBtn = document.getElementById('addExperienceBtn');
+const addEducationBtn = document.getElementById('addEducationBtn');
+const addSkillBtn = document.getElementById('addSkillBtn');
+const editContactBtn = document.getElementById('editContactBtn');
+const editPersonalBtn = document.getElementById('editPersonalBtn');
+const addCertificationBtn = document.getElementById('addCertificationBtn');
+const addProfileSectionBtn = document.getElementById('addProfileSectionBtn');
+
+// Modal Elements
+const aboutModal = document.getElementById('aboutModal');
+const experienceModal = document.getElementById('experienceModal');
+const educationModal = document.getElementById('educationModal');
+const skillsModal = document.getElementById('skillsModal');
+const contactModal = document.getElementById('contactModal');
+const personalModal = document.getElementById('personalModal');
+const certificationsModal = document.getElementById('certificationsModal');
+const addSectionModal = document.getElementById('addSectionModal');
+
+// Profile Data
+let profileData = {};
+
+// Initialize the page
+document.addEventListener('DOMContentLoaded', function() {
+    // Load profile data from backend
+    loadProfileData();
+    
+    // Set up event listeners
+    setupEventListeners();
+});
+
+// Load profile data from backend
+// Load profile data from backend
+// Load profile data from backend - FIXED VERSION
+async function loadProfileData() {
+    try {
+        // Get the user ID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const profileUserId = urlParams.get('id');
+        
+        console.log('📄 Loading profile page. URL ID parameter:', profileUserId);
+
+        let endpoint;
+        if (profileUserId) {
+            // Load OTHER user's profile
+            endpoint = `${API_BASE}/employee/profile/${profileUserId}`;
+            console.log('👤 Loading OTHER user profile from:', endpoint);
+            
+            // Disable edit buttons when viewing someone else's profile
+            disableEditButtons();
+        } else {
+            // Load CURRENT user's profile
+            endpoint = `${API_BASE}/profile`;
+            console.log('👤 Loading CURRENT user profile from:', endpoint);
+            
+            // Enable edit buttons for own profile
+            enableEditButtons();
+        }
+
+        const res = await fetch(endpoint, { 
+            credentials: "include" 
+        });
+        
+        if (res.status === 401) {
+            window.location.href = "d.html";
+            return;
+        }
+        
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        
+        const data = await res.json();
+        profileData = data;
+        fillProfile(data);
+    } catch (err) {
+        console.error("Profile fetch error:", err);
+        if (err.message.includes("401") || err.message.includes("Not authenticated")) {
+            window.location.href = "d.html";
+        } else {
+            alert("Failed to load profile data. Please try again later.");
+        }
+    }
+}
+
+// Disable edit buttons when viewing someone else's profile
+function disableEditButtons() {
+    const editButtons = [
+        'editAboutBtn', 'addExperienceBtn', 'addEducationBtn', 'addSkillBtn',
+        'editContactBtn', 'editPersonalBtn', 'addCertificationBtn', 'addProfileSectionBtn'
+    ];
+    
+    editButtons.forEach(btnId => {
+        const btn = document.getElementById(btnId);
+        if (btn) {
+            btn.style.display = 'none';
+        }
+    });
+    
+    // Also hide upload buttons
+    const coverUploadBtn = document.getElementById('coverUploadBtnTrigger');
+    const avatarUploadBtn = document.getElementById('avatarUploadBtnTrigger');
+    if (coverUploadBtn) coverUploadBtn.style.display = 'none';
+    if (avatarUploadBtn) avatarUploadBtn.style.display = 'none';
+    
+    // Remove editable functionality
+    const editableElements = document.querySelectorAll('.editable-text');
+    editableElements.forEach(el => {
+        el.style.cursor = 'default';
+        el.classList.remove('editable-text');
+    });
+}
+
+// Enable edit buttons for own profile
+function enableEditButtons() {
+    const editButtons = [
+        'editAboutBtn', 'addExperienceBtn', 'addEducationBtn', 'addSkillBtn',
+        'editContactBtn', 'editPersonalBtn', 'addCertificationBtn', 'addProfileSectionBtn'
+    ];
+    
+    editButtons.forEach(btnId => {
+        const btn = document.getElementById(btnId);
+        if (btn) {
+            btn.style.display = 'block';
+        }
+    });
+    
+    // Show upload buttons
+    const coverUploadBtn = document.getElementById('coverUploadBtnTrigger');
+    const avatarUploadBtn = document.getElementById('avatarUploadBtnTrigger');
+    if (coverUploadBtn) coverUploadBtn.style.display = 'flex';
+    if (avatarUploadBtn) avatarUploadBtn.style.display = 'flex';
+    
+    // Add editable functionality
+    initEditableFields();
+}
+
+// Fill profile data into the UI
+function fillProfile(data) {
+    const p = data.profile || {};
+    const user = data.user || {};
+    
+    // Basic profile info
+    document.getElementById('profileName').textContent = p.name || user.name || "Your Name";
+    document.getElementById('profileTitle').textContent = p.headline || "Add your professional headline";
+    document.getElementById('profileLocation').textContent = p.location || "Add your location";
+    document.getElementById('profileAbout').textContent = p.about || "Add a summary about yourself...";
+    
+    // Connections count
+    document.getElementById('profileConnections').textContent = 
+        (p.connections_count ? `${p.connections_count}+ connections` : "0 connections");
+    
+    // Avatar and cover
+    const avatarLarge = document.getElementById('profileAvatarLarge');
+    if (p.avatar_url) {
+        avatarLarge.innerHTML = 
+            `<img src="${p.avatar_url.startsWith('http') ? p.avatar_url : 'http://localhost:4000' + p.avatar_url}" 
+                style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+            <div class="avatar-upload-btn" id="avatarUploadBtnTrigger">
+                <i class="fas fa-camera" style="color: #666; font-size: 14px;"></i>
+            </div>`;
+    } else {
+        const firstName = (p.name || user.name || "U").charAt(0).toUpperCase();
+        avatarLarge.innerHTML = 
+            `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:60px;color:white;">${firstName}</div>
+            <div class="avatar-upload-btn" id="avatarUploadBtnTrigger">
+                <i class="fas fa-camera" style="color: #666; font-size: 14px;"></i>
+            </div>`;
+    }
+    
+    const profileBanner = document.getElementById('profileBanner');
+    if (p.cover_url) {
+        profileBanner.innerHTML = 
+            `<img src="${p.cover_url.startsWith('http') ? p.cover_url : 'http://localhost:4000' + p.cover_url}" 
+                style="width:100%;height:100%;object-fit:cover;">
+            <div class="photo-upload-btn" id="coverUploadBtnTrigger">
+                <i class="fas fa-camera" style="color: #666;"></i>
+            </div>`;
+    } else {
+        profileBanner.style.background = "linear-gradient(135deg, #0a66c2, #004182)";
+        profileBanner.innerHTML = 
+            `<div class="photo-upload-btn" id="coverUploadBtnTrigger">
+                <i class="fas fa-camera" style="color: #666;"></i>
+            </div>`;
+    }
+    
+    // Contact info
+    const contactInfo = document.getElementById('contactInfo');
+    const email = user.email || p.email;
+    const phone = p.phone || user.phone;
+    
+    if (email || phone || p.linkedin_url || p.website) {
+        contactInfo.innerHTML = `
+            ${email ? `<p><i class="fas fa-envelope"></i> ${email}</p>` : ''}
+            ${phone ? `<p><i class="fas fa-phone"></i> ${phone}</p>` : ''}
+            ${p.linkedin_url ? `<p><i class="fab fa-linkedin"></i> ${p.linkedin_url}</p>` : ''}
+            ${p.website ? `<p><i class="fas fa-globe"></i> ${p.website}</p>` : ''}
+        `;
+    } else {
+        contactInfo.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-address-card"></i>
+                <p>No contact information added yet</p>
+                <button class="add-first-btn" id="addContactInfoBtn">Add Contact Information</button>
+            </div>
+        `;
+    }
+    
+if (p.birthday || p.gender || p.languages || p.interests) {
+    personalDetails.innerHTML = `
+        ${p.birthday ? `<p><strong>Birthday:</strong> ${new Date(p.birthday).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</p>` : ''}
+
+        ${p.gender ? `<p><strong>Gender:</strong> ${p.gender}</p>` : ''}
+        ${p.languages ? `<p><strong>Languages:</strong> ${p.languages}</p>` : ''}
+        ${p.interests ? `<p><strong>Interests:</strong> ${p.interests}</p>` : ''}
+    `;
+} else {
+    personalDetails.innerHTML = `
+        <div class="empty-state">
+            <i class="fas fa-user"></i>
+            <p>No personal details added yet</p>
+            <button class="add-first-btn" id="addPersonalDetailsBtn">Add Personal Details</button>
+        </div>
+    `;
+}
+
+    
+    // Dynamic lists with empty states
+    renderList("experienceList", data.experiences, e => `
+        <div class="experience-item">
+            <div class="item-header">
+                <div class="company-logo"><i class="fas fa-building"></i></div>
+                <div class="item-content">
+                    <div class="item-title">${e.title}</div>
+                    <div class="item-subtitle">${e.company} • ${e.employment_type || 'Full-time'}</div>
+                    <div class="item-date">${formatDate(e.start_date)} - ${e.current ? 'Present' : formatDate(e.end_date)}</div>
+                    ${e.location ? `<div class="item-subtitle">${e.location}</div>` : ''}
+                </div>
+                <div class="edit-icon" data-id="${e.id}" data-type="experience">
+                    <i class="fas fa-pencil-alt"></i>
+                </div>
+            </div>
+            ${e.description ? `<div class="item-description">${e.description}</div>` : ''}
+        </div>
+    `);
+    
+    renderList("educationList", data.education, e => `
+        <div class="education-item">
+            <div class="item-header">
+                <div class="company-logo"><i class="fas fa-graduation-cap"></i></div>
+                <div class="item-content">
+                    <div class="item-title">${e.school}</div>
+                    <div class="item-subtitle">${e.degree} ${e.field_of_study ? `in ${e.field_of_study}` : ''}</div>
+                    <div class="item-date">${formatDate(e.start_date)} - ${e.end_date ? formatDate(e.end_date) : 'Present'}</div>
+                    ${e.grade ? `<div class="item-subtitle">Grade: ${e.grade}</div>` : ''}
+                </div>
+                <div class="edit-icon" data-id="${e.id}" data-type="education">
+                    <i class="fas fa-pencil-alt"></i>
+                </div>
+            </div>
+            ${e.description ? `<div class="item-description">${e.description}</div>` : ''}
+        </div>
+    `);
+    
+    renderList("skillsList", data.skills, s => `
+        <div class="skill-pill">${s.name} <span class="endorsement-count">✓ ${s.endorsements || '0'}</span></div>
+    `);
+    
+    renderList("certificationsList", data.certifications, c => `
+        <div class="certification-item">
+            <div class="item-header">
+                <div class="company-logo"><i class="fas fa-certificate"></i></div>
+                <div class="item-content">
+                    <div class="item-title">${c.name}</div>
+                    <div class="item-subtitle">${c.issuing_organization}</div>
+                    <div class="item-date">Issued ${formatDate(c.issue_date)} ${c.expiration_date ? `• Expires ${formatDate(c.expiration_date)}` : ''}</div>
+                    ${c.credential_id ? `<div class="item-subtitle">Credential ID: ${c.credential_id}</div>` : ''}
+                </div>
+                <div class="edit-icon" data-id="${c.id}" data-type="certification">
+                    <i class="fas fa-pencil-alt"></i>
+                </div>
+            </div>
+        </div>
+    `);
+    
+    // Update counts
+    document.getElementById("experienceCount").textContent = data.experiences ? data.experiences.length : 0;
+    document.getElementById("skillsCount").textContent = data.skills ? data.skills.length : 0;
+    document.getElementById("certificationsCount").textContent = data.certifications ? data.certifications.length : 0;
+    
+    // Initialize editable fields after content is loaded
+    setTimeout(initEditableFields, 100);
+}
+
+function renderList(id, arr, template) {
+    const container = document.getElementById(id);
+    if (arr && arr.length > 0) {
+        container.innerHTML = arr.map(template).join("");
+    } else {
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-${getSectionIcon(id)}"></i>
+                <p>No ${getSectionName(id)} added yet</p>
+                <button class="add-first-btn" id="addFirst${id}Btn">Add Your First ${getSectionName(id)}</button>
+            </div>
+        `;
+    }
+}
+
+function getSectionIcon(sectionId) {
+    const icons = {
+        'experienceList': 'briefcase',
+        'educationList': 'graduation-cap',
+        'skillsList': 'tools',
+        'certificationsList': 'certificate'
+    };
+    return icons[sectionId] || 'plus';
+}
+
+function getSectionName(sectionId) {
+    const names = {
+        'experienceList': 'Experience',
+        'educationList': 'Education',
+        'skillsList': 'Skill',
+        'certificationsList': 'Certification'
+    };
+    return names[sectionId] || 'Item';
+}
+
+function formatDate(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+}
+
+// Set up event listeners
+function setupEventListeners() {
+    // Mobile menu
+    hamburger?.addEventListener('click', toggleMobileMenu);
+    closeMenu?.addEventListener('click', toggleMobileMenu);
+    overlay?.addEventListener('click', toggleMobileMenu);
+    
+    // Dropdown menus
+    servicesDropdown?.addEventListener('click', function(e) {
+        e.stopPropagation();
+        servicesMenu.classList.toggle('show');
+        businessMenu.classList.remove('show');
+    });
+    
+    businessDropdown?.addEventListener('click', function(e) {
+        e.stopPropagation();
+        businessMenu.classList.toggle('show');
+        servicesMenu.classList.remove('show');
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function() {
+        servicesMenu?.classList.remove('show');
+        businessMenu?.classList.remove('show');
+    });
+    
+    // Profile edit buttons
+    editAboutBtn?.addEventListener('click', () => openModal('aboutModal'));
+    addExperienceBtn?.addEventListener('click', () => {
+        document.getElementById('experienceModalTitle').textContent = 'Add Experience';
+        document.getElementById('experienceForm').reset();
+        document.getElementById('experienceId').value = '';
+        document.getElementById('experienceCurrent').checked = false;
+        openModal('experienceModal');
+    });
+    addEducationBtn?.addEventListener('click', () => {
+        document.getElementById('educationModalTitle').textContent = 'Add Education';
+        document.getElementById('educationForm').reset();
+        document.getElementById('educationId').value = '';
+        document.getElementById('educationCurrent').checked = false;
+        openModal('educationModal');
+    });
+    addSkillBtn?.addEventListener('click', () => openModal('skillsModal'));
+    editContactBtn?.addEventListener('click', () => openModal('contactModal'));
+    editPersonalBtn?.addEventListener('click', () => openModal('personalModal'));
+    addCertificationBtn?.addEventListener('click', () => {
+        document.getElementById('certificationsModalTitle').textContent = 'Add Certification';
+        document.getElementById('certificationsForm').reset();
+        document.getElementById('certificationId').value = '';
+        document.getElementById('certificationNoExpiry').checked = false;
+        openModal('certificationsModal');
+    });
+    addProfileSectionBtn?.addEventListener('click', () => openModal('addSectionModal'));
+    
+    // Form submissions
+    document.getElementById('aboutForm')?.addEventListener('submit', saveAbout);
+    document.getElementById('experienceForm')?.addEventListener('submit', saveExperience);
+    document.getElementById('educationForm')?.addEventListener('submit', saveEducation);
+    document.getElementById('skillsForm')?.addEventListener('submit', saveSkills);
+    document.getElementById('contactForm')?.addEventListener('submit', saveContact);
+    document.getElementById('personalForm')?.addEventListener('submit', savePersonal);
+    document.getElementById('certificationsForm')?.addEventListener('submit', saveCertification);
+    
+    // Add section buttons
+    document.querySelectorAll('.add-section-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const section = this.getAttribute('data-section');
+            openAddSectionModal(section);
+        });
+    });
+    
+    // Modal close buttons
+    document.querySelectorAll('.close-modal').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const modalId = this.getAttribute('data-modal');
+            closeModal(modalId);
+        });
+    });
+    
+    // Modal cancel buttons
+    document.querySelectorAll('.form-cancel').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const modalId = this.getAttribute('data-modal');
+            closeModal(modalId);
+        });
+    });
+    
+    // Add first buttons in empty sections
+    document.addEventListener('click', function(e) {
+        if (e.target.id.startsWith('addFirst') || e.target.id.startsWith('addContactInfoBtn') || e.target.id.startsWith('addPersonalDetailsBtn')) {
+            const section = e.target.id.replace('addFirst', '').replace('Btn', '').replace('add', '').replace('Info', '').replace('Details', '');
+            openAddSectionModal(section.toLowerCase());
+        }
+    });
+    
+    // Edit icons for existing items
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.edit-icon')) {
+            const icon = e.target.closest('.edit-icon');
+            const type = icon.getAttribute('data-type');
+            const id = icon.getAttribute('data-id');
+            
+            if (type === 'experience') {
+                editExperience(parseInt(id));
+            } else if (type === 'education') {
+                editEducation(parseInt(id));
+            } else if (type === 'certification') {
+                editCertification(parseInt(id));
+            }
+        }
+    });
+    
+    // Upload modal triggers
+    document.addEventListener("click", function(e) {
+        if (e.target.closest("#coverUploadBtnTrigger")) {
+            document.getElementById("coverUploadModal").style.display = "flex";
+        }
+        
+        if (e.target.closest("#avatarUploadBtnTrigger")) {
+            document.getElementById("avatarUploadModal").style.display = "flex";
+        }
+    });
+    
+    // Close upload modals
+    document.querySelectorAll(".close-modal").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            const modalId = e.target.getAttribute("data-modal");
+            document.getElementById(modalId).style.display = "none";
+        });
+    });
+    
+    // File input changes
+    document.getElementById("coverUploadInput")?.addEventListener("change", function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById("coverPreview").innerHTML = `<img src="${event.target.result}">`;
+                document.getElementById("coverUploadBtn").disabled = false;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    
+    document.getElementById("avatarUploadInput")?.addEventListener("change", function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById("avatarPreview").innerHTML = `<img src="${event.target.result}">`;
+                document.getElementById("avatarUploadBtn").disabled = false;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    
+    // Upload buttons
+    document.getElementById("coverUploadBtn")?.addEventListener("click", uploadCover);
+    document.getElementById("avatarUploadBtn")?.addEventListener("click", uploadAvatar);
+    
+    // Logout
+    document.getElementById("logoutLink")?.addEventListener("click", async e => {
+        e.preventDefault();
+        try {
+            await fetch(`${API_BASE}/auth/logout`, { method: "POST", credentials: "include" });
+            window.location.href = "d.html";
+        } catch (err) {
+            console.error("Logout error:", err);
+            window.location.href = "d.html";
+        }
+    });
+}
+
+// Initialize editable fields
+function initEditableFields() {
+    // Make headline, location, and about editable
+    const editableFields = document.querySelectorAll('.editable-text');
+    editableFields.forEach(field => {
+        field.addEventListener('click', function() {
+            makeEditable(this);
+        });
+    });
+}
+
+// Make a field editable
+function makeEditable(element) {
+    const originalText = element.textContent;
+    const fieldName = element.getAttribute('data-field');
+    
+    // Create input based on field type
+    let input;
+    if (fieldName === 'about') {
+        input = document.createElement('textarea');
+        input.className = 'editable-textarea';
+        input.value = originalText;
+    } else {
+        input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'editable-input';
+        input.value = originalText;
+    }
+    
+    // Create buttons
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'editable-buttons';
+    
+    const saveButton = document.createElement('button');
+    saveButton.textContent = 'Save';
+    saveButton.className = 'editable-save';
+    
+    const cancelButton = document.createElement('button');
+    cancelButton.textContent = 'Cancel';
+    cancelButton.className = 'editable-cancel';
+    
+    buttonContainer.appendChild(saveButton);
+    buttonContainer.appendChild(cancelButton);
+    
+    // Replace element content with input and buttons
+    element.innerHTML = '';
+    element.appendChild(input);
+    element.appendChild(buttonContainer);
+    
+    // Focus the input
+    input.focus();
+    
+    // Save on Enter key (for single-line inputs)
+    if (fieldName !== 'about') {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                saveEditableField(element, fieldName, input.value);
+            }
+        });
+    }
+    
+    // Save button click
+    saveButton.addEventListener('click', function() {
+        saveEditableField(element, fieldName, input.value);
+    });
+    
+    // Cancel button click
+    cancelButton.addEventListener('click', function() {
+        element.textContent = originalText;
+        element.classList.add('editable-text');
+        element.setAttribute('data-field', fieldName);
+        element.addEventListener('click', function() {
+            makeEditable(this);
+        });
+    });
+    
+    // Cancel on Escape key
+    input.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            cancelButton.click();
+        }
+    });
+}
+
+// Save an editable field to backend
+async function saveEditableField(element, fieldName, value) {
+    try {
+        // Update the UI first for better UX
+        element.textContent = value;
+        element.classList.add('editable-text');
+        element.setAttribute('data-field', fieldName);
+        
+        // Re-add the click event
+        element.addEventListener('click', function() {
+            makeEditable(this);
+        });
+        
+        // Prepare data for backend
+        const updateData = {};
+        if (fieldName === 'headline') {
+            updateData.headline = value;
+        } else if (fieldName === 'location') {
+            updateData.location = value;
+        } else if (fieldName === 'about') {
+            updateData.about = value;
+        }
+        
+        // Save to the database via API
+        const res = await fetch(`${API_BASE}/profile`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify(updateData)
+        });
+        
+        if (!res.ok) {
+            throw new Error('Failed to update profile');
+        }
+        
+        const result = await res.json();
+        console.log('Profile updated successfully:', result);
+        
+    } catch (err) {
+        console.error('Error updating profile:', err);
+        alert('Failed to update profile. Please try again.');
+    }
+}
+
+// Edit experience
+function editExperience(id) {
+    const experience = profileData.experiences.find(exp => exp.id === id);
+    if (!experience) return;
+    
+    document.getElementById('experienceModalTitle').textContent = 'Edit Experience';
+    document.getElementById('experienceId').value = experience.id;
+    document.getElementById('experienceTitle').value = experience.title;
+    document.getElementById('experienceCompany').value = experience.company;
+    document.getElementById('experienceLocation').value = experience.location || '';
+    document.getElementById('experienceStartDate').value = experience.start_date ? experience.start_date.substring(0, 7) : '';
+    document.getElementById('experienceEndDate').value = experience.end_date ? experience.end_date.substring(0, 7) : '';
+    document.getElementById('experienceCurrent').checked = experience.current || false;
+    document.getElementById('experienceDescription').value = experience.description || '';
+    
+    openModal('experienceModal');
+}
+
+// Edit education
+function editEducation(id) {
+    const education = profileData.education.find(edu => edu.id === id);
+    if (!education) return;
+    
+    document.getElementById('educationModalTitle').textContent = 'Edit Education';
+    document.getElementById('educationId').value = education.id;
+    document.getElementById('educationSchool').value = education.school;
+    document.getElementById('educationDegree').value = education.degree;
+    document.getElementById('educationField').value = education.field_of_study || '';
+    document.getElementById('educationStartDate').value = education.start_date ? education.start_date.substring(0, 7) : '';
+    document.getElementById('educationEndDate').value = education.end_date ? education.end_date.substring(0, 7) : '';
+    document.getElementById('educationCurrent').checked = false;
+    document.getElementById('educationDescription').value = education.description || '';
+    
+    openModal('educationModal');
+}
+
+// Edit certification
+function editCertification(id) {
+    const certification = profileData.certifications.find(cert => cert.id === id);
+    if (!certification) return;
+    
+    document.getElementById('certificationsModalTitle').textContent = 'Edit Certification';
+    document.getElementById('certificationId').value = certification.id;
+    document.getElementById('certificationName').value = certification.name;
+    document.getElementById('certificationIssuer').value = certification.issuing_organization;
+    document.getElementById('certificationDate').value = certification.issue_date ? certification.issue_date.substring(0, 7) : '';
+    document.getElementById('certificationExpiry').value = certification.expiration_date ? certification.expiration_date.substring(0, 7) : '';
+    document.getElementById('certificationNoExpiry').checked = !certification.expiration_date;
+    document.getElementById('certificationCredential').value = certification.credential_id || '';
+    document.getElementById('certificationUrl').value = certification.credential_url || '';
+    
+    openModal('certificationsModal');
+}
+
+// Save about information
+async function saveAbout(e) {
+    e.preventDefault();
+    try {
+        const aboutText = document.getElementById('aboutText').value;
+        
+        const res = await fetch(`${API_BASE}/profile`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({ about: aboutText })
+        });
+        
+        if (!res.ok) {
+            throw new Error('Failed to update about section');
+        }
+        
+        const result = await res.json();
+        document.getElementById('profileAbout').textContent = aboutText;
+        closeModal('aboutModal');
+        alert('About section updated successfully!');
+        
+    } catch (err) {
+        console.error('Error updating about:', err);
+        alert('Failed to update about section. Please try again.');
+    }
+}
+
+// Save experience - FIXED
+async function saveExperience(e) {
+    e.preventDefault();
+    try {
+        const formData = new FormData(document.getElementById('experienceForm'));
+        const experienceData = {
+            title: formData.get('title'),
+            company: formData.get('company'),
+            location: formData.get('location'),
+            start_date: formData.get('startDate'),
+            end_date: formData.get('current') === 'on' ? null : formData.get('endDate'),
+            current: formData.get('current') === 'on',
+            description: formData.get('description')
+        };
+        
+        console.log('Saving experience:', experienceData);
+        
+        const res = await fetch(`${API_BASE}/profile/experience`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify(experienceData)
+        });
+        
+        if (!res.ok) {
+            const errorText = await res.text();
+            throw new Error(`Failed to save experience: ${res.status} ${errorText}`);
+        }
+        
+        const result = await res.json();
+        closeModal('experienceModal');
+        alert('Experience saved successfully!');
+        
+        // Reload profile data to reflect changes
+        loadProfileData();
+        
+    } catch (err) {
+        console.error('Error saving experience:', err);
+        alert('Failed to save experience. Please try again. Error: ' + err.message);
+    }
+}
+
+// Save education - FIXED
+async function saveEducation(e) {
+    e.preventDefault();
+    try {
+        const formData = new FormData(document.getElementById('educationForm'));
+        const educationData = {
+            school: formData.get('school'),
+            degree: formData.get('degree'),
+            field_of_study: formData.get('field'),
+            start_date: formData.get('startDate'),
+            end_date: formData.get('endDate') || null,
+            grade: formData.get('grade') || '',
+            description: formData.get('description')
+        };
+        
+        console.log('Saving education:', educationData);
+        
+        const res = await fetch(`${API_BASE}/profile/education`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify(educationData)
+        });
+        
+        if (!res.ok) {
+            const errorText = await res.text();
+            throw new Error(`Failed to save education: ${res.status} ${errorText}`);
+        }
+        
+        const result = await res.json();
+        closeModal('educationModal');
+        alert('Education saved successfully!');
+        
+        // Reload profile data to reflect changes
+        loadProfileData();
+        
+    } catch (err) {
+        console.error('Error saving education:', err);
+        alert('Failed to save education. Please try again. Error: ' + err.message);
+    }
+}
+
+// Save skills
+async function saveSkills(e) {
+    e.preventDefault();
+    try {
+        const skillsInput = document.getElementById('skillsInput').value;
+        const skillsArray = skillsInput.split(',').map(skill => skill.trim()).filter(skill => skill !== '');
+        
+        // Save each skill individually
+        for (const skill of skillsArray) {
+            const res = await fetch(`${API_BASE}/profile/skill`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify({ name: skill })
+            });
+            
+            if (!res.ok) {
+                throw new Error(`Failed to save skill: ${skill}`);
+            }
+        }
+        
+        closeModal('skillsModal');
+        alert('Skills saved successfully!');
+        
+        // Reload profile data to reflect changes
+        loadProfileData();
+        
+    } catch (err) {
+        console.error('Error saving skills:', err);
+        alert('Failed to save skills. Please try again.');
+    }
+}
+
+// Save contact information
+async function saveContact(e) {
+    e.preventDefault();
+    try {
+        const formData = new FormData(document.getElementById('contactForm'));
+        const contactData = {
+            email: formData.get('email'),
+            phone: formData.get('phone'),
+            linkedin_url: formData.get('linkedin'),
+            website: formData.get('website')
+        };
+        
+        const res = await fetch(`${API_BASE}/profile`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify(contactData)
+        });
+        
+        if (!res.ok) {
+            throw new Error('Failed to update contact information');
+        }
+        
+        const result = await res.json();
+        closeModal('contactModal');
+        alert('Contact information updated successfully!');
+        
+        // Reload profile data to reflect changes
+        loadProfileData();
+        
+    } catch (err) {
+        console.error('Error updating contact information:', err);
+        alert('Failed to update contact information. Please try again.');
+    }
+}
+
+
+async function savePersonal(e) {
+    e.preventDefault();
+    
+    try {
+        const data = {
+            birthday: document.getElementById("personalBirthday").value,
+            gender: document.getElementById("personalGender").value,
+            languages: document.getElementById("personalLanguages").value,
+            interests: document.getElementById("personalInterests").value
+        };
+
+        console.log("Sending personal details:", data);
+
+        const res = await fetch(`${API_BASE}/profile/personal-details`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include", // This is crucial for session-based auth
+            body: JSON.stringify(data)
+        });
+
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        const result = await res.json();
+        alert(result.message || "Personal details updated successfully!");
+        closeModal("personalModal");
+        loadProfileData();
+        
+    } catch (err) {
+        console.error('Error saving personal details:', err);
+        alert('Failed to save personal details. Please try again.');
+    }
+}
+
+
+
+
+// Save certification - FIXED
+async function saveCertification(e) {
+    e.preventDefault();
+    try {
+        const formData = new FormData(document.getElementById('certificationsForm'));
+        const certificationData = {
+            name: formData.get('name'),
+            issuing_organization: formData.get('issuer'),
+            issue_date: formData.get('issueDate'),
+            expiration_date: formData.get('noExpiry') === 'on' ? null : formData.get('expiryDate'),
+            credential_id: formData.get('credentialId') || '',
+            credential_url: formData.get('credentialUrl') || ''
+        };
+        
+        console.log('Saving certification:', certificationData);
+        
+        const res = await fetch(`${API_BASE}/profile/certification`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify(certificationData)
+        });
+        
+        if (!res.ok) {
+            const errorText = await res.text();
+            throw new Error(`Failed to save certification: ${res.status} ${errorText}`);
+        }
+        
+        const result = await res.json();
+        closeModal('certificationsModal');
+        alert('Certification saved successfully!');
+        
+        // Reload profile data to reflect changes
+        loadProfileData();
+        
+    } catch (err) {
+        console.error('Error saving certification:', err);
+        alert('Failed to save certification. Please try again. Error: ' + err.message);
+    }
+}
+
+// Upload avatar
+async function uploadAvatar() {
+    const fileInput = document.getElementById("avatarUploadInput");
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        alert("Please select a file to upload.");
+        return;
+    }
+    
+    try {
+        const formData = new FormData();
+        formData.append("avatar", file);
+        
+        const res = await fetch(`${API_BASE}/profile/avatar`, {
+            method: "POST",
+            credentials: "include",
+            body: formData
+        });
+        
+        if (!res.ok) {
+            throw new Error(`Upload failed: ${res.status}`);
+        }
+        
+        const result = await res.json();
+        document.getElementById("avatarUploadModal").style.display = "none";
+        alert("Avatar uploaded successfully!");
+        
+        // Reload profile to show new avatar
+        loadProfileData();
+        
+    } catch (err) {
+        console.error("Avatar upload error:", err);
+        alert("Failed to upload avatar. Please try again.");
+    }
+}
+
+// Upload cover photo
+async function uploadCover() {
+    const fileInput = document.getElementById("coverUploadInput");
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        alert("Please select a file to upload.");
+        return;
+    }
+    
+    try {
+        const formData = new FormData();
+        formData.append("cover", file);
+        
+        const res = await fetch(`${API_BASE}/profile/cover`, {
+            method: "POST",
+            credentials: "include",
+            body: formData
+        });
+        
+        if (!res.ok) {
+            throw new Error(`Upload failed: ${res.status}`);
+        }
+        
+        const result = await res.json();
+        document.getElementById("coverUploadModal").style.display = "none";
+        alert("Cover photo uploaded successfully!");
+        
+        // Reload profile to show new cover
+        loadProfileData();
+        
+    } catch (err) {
+        console.error("Cover upload error:", err);
+        alert("Failed to upload cover photo. Please try again.");
+    }
+}
+
+// Open modal
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'flex';
+    }
+}
+
+// Close modal
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Open add section modal
+function openAddSectionModal(section) {
+    const modalMap = {
+        'experience': 'experienceModal',
+        'education': 'educationModal',
+        'skills': 'skillsModal',
+        'contact': 'contactModal',
+        'personal': 'personalModal',
+        'certifications': 'certificationsModal'
+    };
+    
+    const modalId = modalMap[section];
+    if (modalId) {
+        openModal(modalId);
+    }
+}
+
+// Toggle mobile menu
+function toggleMobileMenu() {
+    mobileMenu.classList.toggle('active');
+    overlay.classList.toggle('active');
+    document.body.classList.toggle('no-scroll');
+}
+
+// Handle current job checkbox
+document.getElementById('experienceCurrent')?.addEventListener('change', function() {
+    const endDateField = document.getElementById('experienceEndDate');
+    if (this.checked) {
+        endDateField.disabled = true;
+        endDateField.value = '';
+    } else {
+        endDateField.disabled = false;
+    }
+});
+
+// Handle no expiry checkbox for certifications
+document.getElementById('certificationNoExpiry')?.addEventListener('change', function() {
+    const expiryField = document.getElementById('certificationExpiry');
+    if (this.checked) {
+        expiryField.disabled = true;
+        expiryField.value = '';
+    } else {
+        expiryField.disabled = false;
+    }
+});
+
+
+
+// Handle current education checkbox
+document.getElementById('educationCurrent')?.addEventListener('change', function() {
+    const endDateField = document.getElementById('educationEndDate');
+    if (this.checked) {
+        endDateField.disabled = true;
+        endDateField.value = '';
+    } else {
+        endDateField.disabled = false;
+    }
+});
+</script>
+
+</body>
 </html>
