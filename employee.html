@@ -1042,6 +1042,7 @@
     
     // ================== LOGOUT FUNCTION ==================
     function logout() {
+        console.log('Logging out...');
         // Call the server logout endpoint to clear cookies
         fetch("https://landing-render-1.onrender.com/api/auth/logout", {
             method: "POST",
@@ -1070,56 +1071,67 @@
         }
     }
 
-
-    
-async function loadUserProfile() {
-    try {
-        console.log('🔍 Loading user profile...');
-        
-        const response = await fetch("https://landing-render-1.onrender.com/api/employee/profile", {
-            method: "GET",
-            credentials: "include" // This sends cookies
-        });
-        
-        console.log('📊 Response status:', response.status);
-        
-        if (response.status === 200) {
-            const profileData = await response.json();
-            console.log('✅ Profile data received:', profileData);
+    // ================== PROFILE LOADING FUNCTION ==================
+    async function loadUserProfile() {
+        try {
+            console.log('🔄 Starting profile load...');
             
-            // Update the UI with the actual data
-            const initials = profileData.name
-                .split(' ')
-                .map(n => n[0])
-                .join('')
-                .toUpperCase();
+            // Set loading state
+            document.getElementById('profileName').textContent = 'Loading...';
+            document.getElementById('profileTitle').textContent = 'Loading profile...';
+            document.getElementById('profileLocation').textContent = 'Loading...';
             
-            document.getElementById('profileAvatar').textContent = initials;
-            document.getElementById('profileName').textContent = profileData.name;
-            document.getElementById('profileTitle').textContent = profileData.headline || "Professional";
-            document.getElementById('profileLocation').textContent = profileData.location || 'Location not specified';
-            document.getElementById('profileConnections').textContent = profileData.connections || 0;
-            document.getElementById('profileViews').textContent = profileData.profile_views || 0;
-            document.getElementById('postAvatar').textContent = initials;
+            const response = await fetch("https://landing-render-1.onrender.com/api/employee/profile", {
+                method: "GET",
+                credentials: "include"
+            });
             
-            // Remove loading states
-            document.getElementById('profileName').classList.remove('loading');
-            document.getElementById('profileTitle').classList.remove('loading');
-            document.getElementById('profileLocation').classList.remove('loading');
+            console.log('📊 API Response Status:', response.status);
+            console.log('📊 API Response OK:', response.ok);
             
-        } else if (response.status === 401) {
-            console.warn('❌ Unauthorized - redirecting to login');
-            window.location.href = 'index.html';
-        } else {
-            console.error('🚨 Unexpected status:', response.status);
-            // Don't redirect on other errors, just show message
-            showErrorMessage('Failed to load profile data');
+            if (response.ok) {
+                const profileData = await response.json();
+                console.log('✅ Profile data loaded successfully:', profileData);
+                
+                // Generate initials from name
+                const initials = profileData.name
+                    .split(' ')
+                    .map(n => n[0])
+                    .join('')
+                    .toUpperCase();
+                
+                // Update all profile elements
+                document.getElementById('profileAvatar').textContent = initials;
+                document.getElementById('profileName').textContent = profileData.name;
+                document.getElementById('profileTitle').textContent = profileData.headline || "Professional";
+                document.getElementById('profileLocation').textContent = profileData.location || 'Location not specified';
+                document.getElementById('profileConnections').textContent = profileData.connections || 0;
+                document.getElementById('profileViews').textContent = profileData.profile_views || 0;
+                document.getElementById('postAvatar').textContent = initials;
+                
+                console.log('✅ Profile UI updated successfully');
+                
+            } else if (response.status === 401) {
+                console.warn('❌ Unauthorized (401) - redirecting to login');
+                // Only redirect on 401, not on other errors
+                setTimeout(() => {
+                    window.location.href = 'd.html';
+                }, 1000);
+            } else {
+                console.error('🚨 Server error:', response.status);
+                // For other errors, show error but don't redirect
+                document.getElementById('profileName').textContent = 'Error Loading Profile';
+                document.getElementById('profileTitle').textContent = 'Please try refreshing the page';
+                showErrorMessage('Failed to load profile data: ' + response.status);
+            }
+        } catch (error) {
+            console.error('💥 Network error fetching profile:', error);
+            // On network errors, show error but don't redirect
+            document.getElementById('profileName').textContent = 'Connection Error';
+            document.getElementById('profileTitle').textContent = 'Cannot connect to server';
+            showErrorMessage('Network error loading profile');
         }
-    } catch (error) {
-        console.error('💥 Network error:', error);
-        showErrorMessage('Network error loading profile');
     }
-}
 
     function showErrorMessage(message) {
         // Create a temporary error message
@@ -1138,17 +1150,80 @@ async function loadUserProfile() {
         
         // Remove after 5 seconds
         setTimeout(() => {
-            document.body.removeChild(errorDiv);
+            if (document.body.contains(errorDiv)) {
+                document.body.removeChild(errorDiv);
+            }
         }, 5000);
     }
 
-    // Initialize everything when the page loads
+    // ================== DEBUG FUNCTION ==================
+    async function debugAuthFlow() {
+        console.log('=== 🐛 DEBUG AUTH FLOW ===');
+        console.log('Current URL:', window.location.href);
+        console.log('Cookies enabled:', navigator.cookieEnabled);
+        
+        try {
+            const testResponse = await fetch("https://landing-render-1.onrender.com/api/employee/profile", {
+                credentials: "include"
+            });
+            
+            console.log('Debug - Response Status:', testResponse.status);
+            console.log('Debug - Response Headers:', testResponse.headers);
+            
+            if (testResponse.ok) {
+                const data = await testResponse.json();
+                console.log('Debug - User Data:', data);
+                console.log('✅ AUTH SUCCESS - User is logged in as:', data.name);
+                return true;
+            } else {
+                console.log('❌ AUTH FAILED - Status:', testResponse.status);
+                return false;
+            }
+        } catch (error) {
+            console.error('Debug - Network Error:', error);
+            return false;
+        }
+    }
+
+    // ================== INITIALIZATION ==================
     document.addEventListener('DOMContentLoaded', function() {
-        loadUserProfile();
+        console.log('🚀 DOM Content Loaded - Initializing dashboard');
+        
+        // First, debug the auth flow
+        debugAuthFlow().then(isAuthenticated => {
+            if (isAuthenticated) {
+                console.log('🎯 User is authenticated, loading profile...');
+                loadUserProfile();
+            } else {
+                console.log('🎯 Auth status unclear, still attempting to load profile...');
+                loadUserProfile();
+            }
+        });
+        
         setupLogoutListener();
-        setupProfileNavigation();
+        
+        // Add a temporary debug button
+        const debugBtn = document.createElement('button');
+        debugBtn.textContent = '🐛 Debug Auth';
+        debugBtn.style.position = 'fixed';
+        debugBtn.style.bottom = '10px';
+        debugBtn.style.right = '10px';
+        debugBtn.style.zIndex = '10000';
+        debugBtn.style.padding = '10px';
+        debugBtn.style.background = '#0073b1';
+        debugBtn.style.color = 'white';
+        debugBtn.style.border = 'none';
+        debugBtn.style.borderRadius = '5px';
+        debugBtn.onclick = debugAuthFlow;
+        document.body.appendChild(debugBtn);
+    });
+
+    // Prevent any accidental redirects
+    window.addEventListener('beforeunload', function(e) {
+        console.log('Page is unloading...');
     });
 </script>
 </body>
 </html>
+
 
