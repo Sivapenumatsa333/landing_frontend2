@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Network - JobPortal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f3f2ef;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #0a66c2;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-menu li {
+            margin-left: 20px;
+            position: relative;
+            font-weight: 500;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .nav-menu a:hover {
+            color: #0a66c2;
+        }
+        
+        .nav-menu a i {
+            margin-right: 5px;
+        }
+        
+        .nav-menu a.active {
+            color: #0a66c2;
+        }
+        
+        /* Notification Badge Styles */
+        .nav-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #d32f2f;
+            color: white;
+            border-radius: 10px;
+            padding: 2px 6px;
+            font-size: 10px;
+            font-weight: 600;
+            min-width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+        
+        /* Networking Styles */
+        .networking-section {
+            padding: 30px 0;
+            min-height: calc(100vh - 80px);
+        }
+        
+        .networking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .networking-header h1 {
+            color: #333;
+            font-size: 32px;
+        }
+        
+        .network-stats {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .stat {
+            text-align: center;
+            padding: 15px 25px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            min-width: 120px;
+        }
+        
+        .stat-number {
+            display: block;
+            font-size: 28px;
+            font-weight: bold;
+            color: #0a66c2;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .network-tabs {
+            display: flex;
+            background: white;
+            border-radius: 10px 10px 0 0;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 0;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            position: relative;
+        }
+        
+        .tab-btn.active {
+            background: #f8f9fa;
+            color: #0a66c2;
+            border-bottom-color: #0a66c2;
+        }
+        
+        .tab-btn:hover:not(.active) {
+            background: #f3f2ef;
+        }
+        
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            min-height: 400px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .connections-grid, .suggestions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .connection-card, .suggestion-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #e1e4e8;
+        }
+        
+        .connection-card:hover, .suggestion-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .connection-header, .suggestion-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .connection-avatar, .suggestion-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #0a66c2;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: transform 0.2s;
+            overflow: hidden;
+        }
+        
+        .connection-avatar:hover, .suggestion-avatar:hover {
+            transform: scale(1.05);
+        }
+        
+        .connection-avatar img, .suggestion-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .connection-info, .suggestion-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        /* Profile Link Styles */
+        .profile-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            transition: color 0.2s;
+            cursor: pointer;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .profile-link:hover {
+            color: #0a66c2;
+            text-decoration: underline;
+        }
+        
+        .connection-title, .suggestion-title {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+        
+        .connection-location, .suggestion-location {
+            color: #999;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        .connection-date {
+            color: #999;
+            font-size: 12px;
+            font-style: italic;
+        }
+        
+        .connection-actions, .suggestion-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn-connect, .btn-message, .btn-remove, .btn-accept, .btn-reject {
+            padding: 8px 16px;
+            border-radius: 16px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .btn-connect {
+            background: #0a66c2;
+            color: white;
+        }
+        
+        .btn-connect:hover {
+            background: #004182;
+        }
+        
+        .btn-message {
+            background: transparent;
+            color: #0a66c2;
+            border: 1px solid #0a66c2;
+        }
+        
+        .btn-message:hover {
+            background: #e8f1f8;
+        }
+        
+        .btn-remove {
+            background: transparent;
+            color: #666;
+            border: 1px solid #ddd;
+        }
+        
+        .btn-remove:hover {
+            background: #f8f9fa;
+            color: #d32f2f;
+        }
+        
+        .btn-accept {
+            background: #0a66c2;
+            color: white;
+        }
+        
+        .btn-accept:hover {
+            background: #004182;
+        }
+        
+        .btn-reject {
+            background: transparent;
+            color: #666;
+            border: 1px solid #ddd;
+        }
+        
+        .btn-reject:hover {
+            background: #f8f9fa;
+            color: #d32f2f;
+        }
+        
+        .requests-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .request-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #e1e4e8;
+        }
+        
+        .request-user {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+        
+        .request-message {
+            color: #666;
+            font-style: italic;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+        
+        .request-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-load-more {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            color: #0a66c2;
+            border: 1px solid #0a66c2;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-top: 20px;
+            transition: all 0.2s;
+        }
+        
+        .btn-load-more:hover {
+            background: #e8f1f8;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        /* Message Modal Specific Styles */
+        #messageModal .modal-content {
+            max-width: 600px;
+        }
+        
+        #directMessage {
+            min-height: 120px;
+            font-family: inherit;
+            line-height: 1.5;
+            resize: vertical;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 25px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            color: #333;
+            font-size: 20px;
+        }
+        
+        .close {
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.2s;
+        }
+        
+        .close:hover {
+            color: #333;
+        }
+        
+        .modal-body {
+            padding: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0a66c2;
+            box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.2);
+        }
+        
+        .char-count {
+            text-align: right;
+            color: #666;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn-cancel {
+            padding: 10px 20px;
+            background: transparent;
+            color: #666;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .btn-cancel:hover {
+            background: #f8f9fa;
+        }
+        
+        .btn-primary {
+            padding: 10px 20px;
+            background: #0a66c2;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        
+        .btn-primary:hover {
+            background: #004182;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+        
+        .empty-state h3 {
+            margin-bottom: 10px;
+            color: #666;
+        }
+        
+        .empty-state p {
+            margin-bottom: 20px;
+        }
+        
+        .btn-explore {
+            padding: 10px 20px;
+            background: #0a66c2;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-explore:hover {
+            background: #004182;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .networking-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .network-stats {
+                justify-content: center;
+            }
+            
+            .connections-grid, .suggestions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .request-item {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .request-user {
+                flex-direction: column;
+            }
+            
+            .request-actions {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .connection-actions, .suggestion-actions {
+                flex-direction: column;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+        }
+        
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #0a66c2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">JobPortal</div>
+                
+                <ul class="nav-menu">
+                    <li><a href="employee.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li>
+                        <a href="network.html" class="active">
+                            <i class="fas fa-network-wired"></i> My Network
+                            <span class="nav-badge" id="networkBadge" style="display: none;"></span>
+                        </a>
+                    </li>
+                    <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                    <li>
+                        <a href="messages.html">
+                            <i class="fas fa-comment"></i> Messages
+                            <span class="nav-badge" id="messagesBadge" style="display: none;"></span>
+                        </a>
+                    </li>
+                    <li><a href="#"><i class="fas fa-bell"></i> Notifications</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Networking Section -->
+    <section class="networking-section">
+        <div class="container">
+            <div class="networking-header">
+                <h1>My Network</h1>
+                <div class="network-stats">
+                    <div class="stat">
+                        <span class="stat-number" id="connectionsCount">0</span>
+                        <span class="stat-label">Connections</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="pendingRequestsCount">0</span>
+                        <span class="stat-label">Pending Requests</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="network-tabs">
+                <button class="tab-btn active" data-tab="connections">
+                    <i class="fas fa-users"></i> My Connections
+                </button>
+                <button class="tab-btn" data-tab="requests">
+                    <i class="fas fa-user-clock"></i> Pending Requests
+                    <span class="nav-badge" id="pendingBadge" style="display: none;"></span>
+                </button>
+                <button class="tab-btn" data-tab="suggestions">
+                    <i class="fas fa-user-plus"></i> People You May Know
+                </button>
+            </div>
+
+            <!-- Connections Tab -->
+            <div class="tab-content active" id="connectionsTab">
+                <div class="connections-grid" id="connectionsList">
+                    <!-- Connections will be loaded here -->
+                </div>
+                <button class="btn-load-more" id="loadMoreConnections" style="display: none;">
+                    <i class="fas fa-arrow-down"></i> Load More Connections
+                </button>
+            </div>
+
+            <!-- Pending Requests Tab -->
+            <div class="tab-content" id="requestsTab">
+                <div class="requests-list" id="pendingRequestsList">
+                    <!-- Pending requests will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Suggestions Tab -->
+            <div class="tab-content" id="suggestionsTab">
+                <div class="suggestions-grid" id="suggestionsList">
+                    <!-- Suggestions will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Connection Request Modal -->
+    <div class="modal" id="connectionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Connect with <span id="connectUserName"></span></h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="connectionRequestForm">
+                    <input type="hidden" id="connectUserId">
+                    <div class="form-group">
+                        <label for="connectionMessage">Add a note (optional):</label>
+                        <textarea id="connectionMessage" placeholder="Hi, I'd like to connect with you..." maxlength="300"></textarea>
+                        <div class="char-count"><span id="charCount">0</span>/300</div>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancel">Cancel</button>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-paper-plane"></i> Send Request
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Modal -->
+    <div class="modal" id="messageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Message <span id="messageUserName"></span></h3>
+                <span class="close" onclick="networkingManager.closeMessageModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="directMessageForm">
+                    <input type="hidden" id="messageUserId">
+                    <div class="form-group">
+                        <label for="directMessage">Your message:</label>
+                        <textarea id="directMessage" placeholder="Type your message here..." rows="4" maxlength="1000"></textarea>
+                        <div class="char-count"><span id="messageCharCount">0</span>/1000</div>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancel" onclick="networkingManager.closeMessageModal()">Cancel</button>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = "http://localhost:4000/api";
+
+        class NetworkingManager {
+            constructor() {
+                this.connectionsOffset = 0;
+                this.connectionsLimit = 12;
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.loadNetworkStats();
+                this.loadConnections();
+                this.updateNavigationBadges();
+                this.startBadgePolling();
+            }
+
+            setupEventListeners() {
+                // Tab switching
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.switchTab(e.target.getAttribute('data-tab'));
+                    });
+                });
+
+                // Load more connections
+                document.getElementById('loadMoreConnections')?.addEventListener('click', () => {
+                    this.loadMoreConnections();
+                });
+
+                // Connection modal
+                document.querySelector('#connectionModal .close')?.addEventListener('click', () => {
+                    this.closeConnectionModal();
+                });
+
+                document.querySelector('#connectionModal .btn-cancel')?.addEventListener('click', () => {
+                    this.closeConnectionModal();
+                });
+
+                // Connection request form
+                document.getElementById('connectionRequestForm')?.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.sendConnectionRequest();
+                });
+
+                // Character count for connection message
+                document.getElementById('connectionMessage')?.addEventListener('input', (e) => {
+                    document.getElementById('charCount').textContent = e.target.value.length;
+                });
+
+                // Direct message form submission
+                document.getElementById('directMessageForm')?.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.sendDirectMessage();
+                });
+
+                // Character count for direct message
+                document.getElementById('directMessage')?.addEventListener('input', (e) => {
+                    document.getElementById('messageCharCount').textContent = e.target.value.length;
+                });
+
+                // Close modals when clicking outside
+                document.getElementById('connectionModal')?.addEventListener('click', (e) => {
+                    if (e.target.id === 'connectionModal') {
+                        this.closeConnectionModal();
+                    }
+                });
+
+                document.getElementById('messageModal')?.addEventListener('click', (e) => {
+                    if (e.target.id === 'messageModal') {
+                        this.closeMessageModal();
+                    }
+                });
+            }
+
+            switchTab(tabName) {
+                // Update active tab button
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+
+                // Update active tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(`${tabName}Tab`).classList.add('active');
+
+                // Load tab content
+                switch(tabName) {
+                    case 'connections':
+                        this.loadConnections();
+                        break;
+                    case 'requests':
+                        this.loadPendingRequests();
+                        break;
+                    case 'suggestions':
+                        this.loadSuggestions();
+                        break;
+                }
+            }
+
+            async updateNavigationBadges() {
+                try {
+                    // Load pending requests count for network badge
+                    const requestsRes = await fetch(`${API_BASE}/connections/pending`, {
+                        credentials: 'include'
+                    });
+                    const requestsData = await requestsRes.json();
+                    const pendingCount = requestsData.requests?.length || 0;
+
+                    // Update network badge
+                    const networkBadge = document.getElementById('networkBadge');
+                    if (pendingCount > 0) {
+                        networkBadge.textContent = pendingCount > 99 ? '99+' : pendingCount;
+                        networkBadge.style.display = 'inline-block';
+                    } else {
+                        networkBadge.style.display = 'none';
+                    }
+
+                    // Load unread messages count for messages badge
+                    const messagesRes = await fetch(`${API_BASE}/messages/unread-count`, {
+                        credentials: 'include'
+                    });
+                    if (messagesRes.ok) {
+                        const messagesData = await messagesRes.json();
+                        const unreadCount = messagesData.unread_count || 0;
+
+                        // Update messages badge
+                        const messagesBadge = document.getElementById('messagesBadge');
+                        if (unreadCount > 0) {
+                            messagesBadge.textContent = unreadCount > 99 ? '99+' : unreadCount;
+                            messagesBadge.style.display = 'inline-block';
+                        } else {
+                            messagesBadge.style.display = 'none';
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error updating navigation badges:', error);
+                }
+            }
+
+            startBadgePolling() {
+                // Update badges every 30 seconds
+                setInterval(() => {
+                    this.updateNavigationBadges();
+                }, 30000);
+            }
+
+            async loadNetworkStats() {
+                try {
+                    // Load connections count
+                    const connectionsRes = await fetch(`${API_BASE}/connections/my?limit=1`, {
+                        credentials: 'include'
+                    });
+                    const connectionsData = await connectionsRes.json();
+                    
+                    // Load pending requests count
+                    const requestsRes = await fetch(`${API_BASE}/connections/pending`, {
+                        credentials: 'include'
+                    });
+                    const requestsData = await requestsRes.json();
+
+                    const connectionsCount = connectionsData.count || 0;
+                    const pendingCount = requestsData.requests?.length || 0;
+
+                    document.getElementById('connectionsCount').textContent = connectionsCount;
+                    document.getElementById('pendingRequestsCount').textContent = pendingCount;
+
+                    // Update pending badge
+                    const pendingBadge = document.getElementById('pendingBadge');
+                    if (pendingCount > 0) {
+                        pendingBadge.textContent = pendingCount;
+                        pendingBadge.style.display = 'inline-block';
+                    } else {
+                        pendingBadge.style.display = 'none';
+                    }
+
+                } catch (error) {
+                    console.error('Error loading network stats:', error);
+                }
+            }
+
+            async loadConnections() {
+                try {
+                    const res = await fetch(`${API_BASE}/connections/my?limit=${this.connectionsLimit}&offset=0`, {
+                        credentials: 'include'
+                    });
+                    
+                    if (!res.ok) throw new Error('Failed to load connections');
+                    
+                    const data = await res.json();
+                    console.log('Connections data:', data); // Debug log
+                    this.displayConnections(data.connections);
+                    this.connectionsOffset = data.connections.length;
+
+                    // Show/hide load more button
+                    const loadMoreBtn = document.getElementById('loadMoreConnections');
+                    if (data.connections.length >= this.connectionsLimit) {
+                        loadMoreBtn.style.display = 'block';
+                    } else {
+                        loadMoreBtn.style.display = 'none';
+                    }
+
+                } catch (error) {
+                    console.error('Error loading connections:', error);
+                    this.showEmptyState('connectionsList', 'Error loading connections', 'Please try again later.');
+                }
+            }
+
+            async loadMoreConnections() {
+                try {
+                    const loadMoreBtn = document.getElementById('loadMoreConnections');
+                    loadMoreBtn.innerHTML = '<div class="loading"></div> Loading...';
+                    loadMoreBtn.disabled = true;
+
+                    const res = await fetch(
+                        `${API_BASE}/connections/my?limit=${this.connectionsLimit}&offset=${this.connectionsOffset}`,
+                        { credentials: 'include' }
+                    );
+                    
+                    if (!res.ok) throw new Error('Failed to load more connections');
+                    
+                    const data = await res.json();
+                    this.displayConnections(data.connections, true);
+                    this.connectionsOffset += data.connections.length;
+
+                    // Hide load more button if no more connections
+                    if (data.connections.length < this.connectionsLimit) {
+                        loadMoreBtn.style.display = 'none';
+                    }
+
+                    loadMoreBtn.innerHTML = '<i class="fas fa-arrow-down"></i> Load More Connections';
+                    loadMoreBtn.disabled = false;
+
+                } catch (error) {
+                    console.error('Error loading more connections:', error);
+                    const loadMoreBtn = document.getElementById('loadMoreConnections');
+                    loadMoreBtn.innerHTML = '<i class="fas fa-arrow-down"></i> Load More Connections';
+                    loadMoreBtn.disabled = false;
+                    alert('Failed to load more connections');
+                }
+            }
+
+            displayConnections(connections, append = false) {
+                const container = document.getElementById('connectionsList');
+                
+                if (!append) {
+                    container.innerHTML = '';
+                }
+
+                if (!connections || connections.length === 0) {
+                    if (!append) {
+                        this.showEmptyState('connectionsList', 'No connections yet', 'Start building your network by connecting with colleagues and professionals.');
+                    }
+                    return;
+                }
+
+                // Debug log
+                this.logConnectionData(connections);
+
+                connections.forEach(connection => {
+                    const connectionCard = this.createConnectionCard(connection);
+                    container.appendChild(connectionCard);
+                });
+            }
+
+            // Enhanced avatar display function
+            createAvatarElement(user, size = 60) {
+                const avatarDiv = document.createElement('div');
+                avatarDiv.className = size === 60 ? 'connection-avatar' : 'suggestion-avatar';
+                avatarDiv.style.width = `${size}px`;
+                avatarDiv.style.height = `${size}px`;
+                avatarDiv.onclick = () => window.location.href = `profile.html?id=${user.id}`;
+                
+                if (user.avatar_url) {
+                    // Ensure the avatar URL is complete
+                    let avatarUrl = user.avatar_url;
+                    if (!avatarUrl.startsWith('http')) {
+                        avatarUrl = `http://localhost:4000${avatarUrl}`;
+                    }
+                    
+                    const img = document.createElement('img');
+                    img.src = avatarUrl;
+                    img.alt = user.name;
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.borderRadius = '50%';
+                    img.style.objectFit = 'cover';
+                    
+                    img.onerror = () => {
+                        // If image fails to load, show fallback
+                        this.showAvatarFallback(avatarDiv, user.name);
+                    };
+                    
+                    avatarDiv.appendChild(img);
+                } else {
+                    // No avatar URL, show fallback with initial
+                    this.showAvatarFallback(avatarDiv, user.name);
+                }
+                
+                return avatarDiv;
+            }
+
+            showAvatarFallback(avatarDiv, userName) {
+                avatarDiv.innerHTML = `<span>${userName.charAt(0).toUpperCase()}</span>`;
+                avatarDiv.style.background = '#0a66c2';
+                avatarDiv.style.color = 'white';
+                avatarDiv.style.display = 'flex';
+                avatarDiv.style.alignItems = 'center';
+                avatarDiv.style.justifyContent = 'center';
+                avatarDiv.style.fontSize = '24px';
+                avatarDiv.style.fontWeight = 'bold';
+            }
+
+            createConnectionCard(connection) {
+                const card = document.createElement('div');
+                card.className = 'connection-card';
+                
+                const avatarElement = this.createAvatarElement(connection, 60);
+
+                card.innerHTML = `
+                    <div class="connection-header">
+                        ${avatarElement.outerHTML}
+                        <div class="connection-info">
+                            <a href="profile.html?id=${connection.id}" class="profile-link">
+                                ${this.escapeHtml(connection.name)}
+                            </a>
+                            <div class="connection-title">${this.escapeHtml(connection.headline || 'No headline')}</div>
+                            <div class="connection-location">${this.escapeHtml(connection.location || 'No location')}</div>
+                            <div class="connection-date">Connected ${new Date(connection.connected_since).toLocaleDateString()}</div>
+                        </div>
+                    </div>
+                    <div class="connection-actions">
+                        <button class="btn-message" onclick="networkingManager.messageUser(${connection.id}, '${this.escapeHtml(connection.name)}')">
+                            <i class="fas fa-envelope"></i> Message
+                        </button>
+                        <button class="btn-remove" onclick="networkingManager.removeConnection(${connection.id})">
+                            <i class="fas fa-user-times"></i> Remove
+                        </button>
+                    </div>
+                `;
+
+                return card;
+            }
+
+            async loadPendingRequests() {
+                try {
+                    const res = await fetch(`${API_BASE}/connections/pending`, {
+                        credentials: 'include'
+                    });
+                    
+                    if (!res.ok) throw new Error('Failed to load pending requests');
+                    
+                    const data = await res.json();
+                    this.displayPendingRequests(data.requests);
+
+                } catch (error) {
+                    console.error('Error loading pending requests:', error);
+                    this.showEmptyState('pendingRequestsList', 'Error loading requests', 'Please try again later.');
+                }
+            }
+
+            displayPendingRequests(requests) {
+                const container = document.getElementById('pendingRequestsList');
+                container.innerHTML = '';
+
+                if (!requests || requests.length === 0) {
+                    this.showEmptyState('pendingRequestsList', 'No pending connection requests', 'When someone sends you a connection request, it will appear here.');
+                    return;
+                }
+
+                requests.forEach(request => {
+                    const requestItem = this.createRequestItem(request);
+                    container.appendChild(requestItem);
+                });
+            }
+
+            createRequestItem(request) {
+                const item = document.createElement('div');
+                item.className = 'request-item';
+                
+                const avatarElement = this.createAvatarElement(request, 60);
+
+                item.innerHTML = `
+                    <div class="request-user">
+                        ${avatarElement.outerHTML}
+                        <div class="connection-info">
+                            <a href="profile.html?id=${request.id}" class="profile-link">
+                                ${this.escapeHtml(request.name)}
+                            </a>
+                            <div class="connection-title">${this.escapeHtml(request.headline || 'No headline')}</div>
+                            ${request.message ? `<div class="request-message">"${this.escapeHtml(request.message)}"</div>` : ''}
+                        </div>
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn-accept" onclick="networkingManager.acceptRequest(${request.id})">
+                            <i class="fas fa-check"></i> Accept
+                        </button>
+                        <button class="btn-reject" onclick="networkingManager.rejectRequest(${request.id})">
+                            <i class="fas fa-times"></i> Ignore
+                        </button>
+                    </div>
+                `;
+
+                return item;
+            }
+
+            async loadSuggestions() {
+                try {
+                    // Use search API to get suggestions
+                    const res = await fetch(`${API_BASE}/search/users?limit=12&q=`, {
+                        credentials: 'include'
+                    });
+                    
+                    if (!res.ok) throw new Error('Failed to load suggestions');
+                    
+                    const data = await res.json();
+                    this.displaySuggestions(data.results || []);
+
+                } catch (error) {
+                    console.error('Error loading suggestions:', error);
+                    this.showEmptyState('suggestionsList', 'Error loading suggestions', 'Please try again later.');
+                }
+            }
+
+            displaySuggestions(suggestions) {
+                const container = document.getElementById('suggestionsList');
+                container.innerHTML = '';
+
+                if (!suggestions || suggestions.length === 0) {
+                    this.showEmptyState('suggestionsList', 'No suggestions available', 'Try searching for specific skills or companies to find people to connect with.');
+                    return;
+                }
+
+                suggestions.forEach(suggestion => {
+                    const suggestionCard = this.createSuggestionCard(suggestion);
+                    container.appendChild(suggestionCard);
+                });
+            }
+
+            createSuggestionCard(suggestion) {
+                const card = document.createElement('div');
+                card.className = 'suggestion-card';
+                
+                const avatarElement = this.createAvatarElement(suggestion, 60);
+
+                card.innerHTML = `
+                    <div class="suggestion-header">
+                        ${avatarElement.outerHTML}
+                        <div class="suggestion-info">
+                            <a href="profile.html?id=${suggestion.id}" class="profile-link">
+                                ${this.escapeHtml(suggestion.name)}
+                            </a>
+                            <div class="suggestion-title">${this.escapeHtml(suggestion.headline || 'No headline')}</div>
+                            <div class="suggestion-location">${this.escapeHtml(suggestion.location || 'No location')}</div>
+                        </div>
+                    </div>
+                    <div class="suggestion-actions">
+                        <button class="btn-connect" onclick="networkingManager.openConnectionModal(${suggestion.id}, '${this.escapeHtml(suggestion.name)}')">
+                            <i class="fas fa-user-plus"></i> Connect
+                        </button>
+                    </div>
+                `;
+
+                return card;
+            }
+
+            // Debug logging
+            logConnectionData(connections) {
+                console.log('=== CONNECTIONS DATA ===');
+                connections.forEach((conn, index) => {
+                    console.log(`Connection ${index + 1}:`, {
+                        id: conn.id,
+                        name: conn.name,
+                        avatar_url: conn.avatar_url,
+                        has_avatar: !!conn.avatar_url
+                    });
+                });
+                console.log('========================');
+            }
+
+            // Profile Navigation
+            viewProfile(userId) {
+                // Redirect to profile page with user ID using the correct parameter name
+                window.location.href = `profile.html?id=${userId}`;
+            }
+
+            // Modal Methods
+            openConnectionModal(userId, userName) {
+                document.getElementById('connectUserId').value = userId;
+                document.getElementById('connectUserName').textContent = userName;
+                document.getElementById('connectionModal').style.display = 'flex';
+                document.getElementById('connectionMessage').value = '';
+                document.getElementById('charCount').textContent = '0';
+                document.getElementById('connectionMessage').focus();
+            }
+
+            closeConnectionModal() {
+                document.getElementById('connectionModal').style.display = 'none';
+            }
+
+            openMessageModal(userId, userName) {
+                document.getElementById('messageUserId').value = userId;
+                document.getElementById('messageUserName').textContent = userName;
+                document.getElementById('messageModal').style.display = 'flex';
+                document.getElementById('directMessage').value = '';
+                document.getElementById('messageCharCount').textContent = '0';
+                document.getElementById('directMessage').focus();
+            }
+
+            closeMessageModal() {
+                document.getElementById('messageModal').style.display = 'none';
+            }
+
+            async sendConnectionRequest() {
+                const userId = document.getElementById('connectUserId').value;
+                const message = document.getElementById('connectionMessage').value;
+                const submitBtn = document.querySelector('#connectionRequestForm .btn-primary');
+
+                try {
+                    submitBtn.innerHTML = '<div class="loading"></div> Sending...';
+                    submitBtn.disabled = true;
+
+                    const res = await fetch(`${API_BASE}/connections/request`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({
+                            toUserId: userId,
+                            message: message
+                        })
+                    });
+
+                    const data = await res.json();
+
+                    if (data.success) {
+                        this.closeConnectionModal();
+                        this.loadNetworkStats();
+                        this.updateNavigationBadges();
+                        this.showToast('Connection request sent successfully!', 'success');
+                    } else {
+                        throw new Error(data.error || 'Failed to send connection request');
+                    }
+
+                } catch (error) {
+                    console.error('Error sending connection request:', error);
+                    this.showToast(error.message || 'Failed to send connection request', 'error');
+                } finally {
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Request';
+                    submitBtn.disabled = false;
+                }
+            }
+
+            async sendDirectMessage() {
+                const userId = document.getElementById('messageUserId').value;
+                const message = document.getElementById('directMessage').value.trim();
+                const submitBtn = document.querySelector('#directMessageForm .btn-primary');
+
+                if (!message) {
+                    this.showToast('Please enter a message', 'error');
+                    return;
+                }
+
+                try {
+                    submitBtn.innerHTML = '<div class="loading"></div> Sending...';
+                    submitBtn.disabled = true;
+
+                    const res = await fetch(`${API_BASE}/messages/start-conversation`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({
+                            recipient_id: userId,
+                            content: message
+                        })
+                    });
+
+                    const data = await res.json();
+
+                    if (data.success) {
+                        this.closeMessageModal();
+                        this.showToast('Message sent successfully!', 'success');
+                    } else {
+                        throw new Error(data.error || 'Failed to send message');
+                    }
+
+                } catch (error) {
+                    console.error('Error sending message:', error);
+                    this.showToast(error.message || 'Failed to send message', 'error');
+                } finally {
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+                    submitBtn.disabled = false;
+                }
+            }
+
+            async acceptRequest(requestId) {
+                try {
+                    const res = await fetch(`${API_BASE}/connections/accept`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({ requestId })
+                    });
+
+                    const data = await res.json();
+
+                    if (data.success) {
+                        this.loadPendingRequests();
+                        this.loadNetworkStats();
+                        this.updateNavigationBadges();
+                        this.showToast('Connection request accepted!', 'success');
+                    } else {
+                        throw new Error(data.error || 'Failed to accept request');
+                    }
+
+                } catch (error) {
+                    console.error('Error accepting request:', error);
+                    this.showToast(error.message || 'Failed to accept connection request', 'error');
+                }
+            }
+
+            async rejectRequest(requestId) {
+                try {
+                    const res = await fetch(`${API_BASE}/connections/reject`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({ requestId })
+                    });
+
+                    const data = await res.json();
+
+                    if (data.success) {
+                        this.loadPendingRequests();
+                        this.loadNetworkStats();
+                        this.updateNavigationBadges();
+                        this.showToast('Connection request ignored', 'info');
+                    } else {
+                        throw new Error(data.error || 'Failed to reject request');
+                    }
+
+                } catch (error) {
+                    console.error('Error rejecting request:', error);
+                    this.showToast(error.message || 'Failed to ignore connection request', 'error');
+                }
+            }
+
+            async removeConnection(userId) {
+                if (!confirm('Are you sure you want to remove this connection?')) {
+                    return;
+                }
+
+                try {
+                    const res = await fetch(`${API_BASE}/connections/remove`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({ connectionUserId: userId })
+                    });
+
+                    const data = await res.json();
+
+                    if (data.success) {
+                        this.loadConnections();
+                        this.loadNetworkStats();
+                        this.updateNavigationBadges();
+                        this.showToast('Connection removed successfully', 'info');
+                    } else {
+                        throw new Error(data.error || 'Failed to remove connection');
+                    }
+
+                } catch (error) {
+                    console.error('Error removing connection:', error);
+                    this.showToast(error.message || 'Failed to remove connection', 'error');
+                }
+            }
+
+            messageUser(userId, userName) {
+                this.openMessageModal(userId, userName);
+            }
+
+            showEmptyState(containerId, title, message) {
+                const container = document.getElementById(containerId);
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-users"></i>
+                        <h3>${title}</h3>
+                        <p>${message}</p>
+                        ${containerId === 'suggestionsList' ? 
+                            '<a href="employee.html" class="btn-explore">Explore People</a>' : ''}
+                    </div>
+                `;
+            }
+
+            showToast(message, type = 'info') {
+                // Create toast element
+                const toast = document.createElement('div');
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    padding: 12px 20px;
+                    background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3'};
+                    color: white;
+                    border-radius: 4px;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                    z-index: 1001;
+                    animation: slideIn 0.3s ease;
+                `;
+                toast.textContent = message;
+                
+                document.body.appendChild(toast);
+                
+                // Remove toast after 3 seconds
+                setTimeout(() => {
+                    toast.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => {
+                        document.body.removeChild(toast);
+                    }, 300);
+                }, 3000);
+            }
+
+            escapeHtml(unsafe) {
+                return unsafe
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+        }
+
+        // Initialize networking manager when page loads
+        let networkingManager;
+        document.addEventListener('DOMContentLoaded', function() {
+            networkingManager = new NetworkingManager();
+        });
+
+        // Add CSS for toast animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
