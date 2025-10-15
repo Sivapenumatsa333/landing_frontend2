@@ -339,6 +339,26 @@
             font-weight: 600;
         }
         
+        .btn-success {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .btn-disabled {
+            background: #666;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: not-allowed;
+            font-weight: 600;
+        }
+        
         .profile-details-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -876,6 +896,75 @@
             margin-top: 15px;
         }
         
+        /* Connection Modal Styles */
+        .connection-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .connection-modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .connection-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .connection-modal-title {
+            font-size: 20px;
+            color: #0a66c2;
+        }
+        
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 5px;
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+        
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .toast.success {
+            background-color: #4caf50;
+        }
+        
+        .toast.error {
+            background-color: #f44336;
+        }
+        
+        .toast.info {
+            background-color: #2196f3;
+        }
+        
         /* Responsive Design */
         @media (max-width: 992px) {
             .nav-menu {
@@ -986,9 +1075,9 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="#"><i class="fas fa-project-diagram"></i> Network</a></li>
+                    <li><a href="network.html"><i class="fas fa-network-wired"></i> My Network</a></li>
                     <li><a href="#"><i class="fas fa-building"></i> Companies</a></li>
-                    <li><a href="#"><i class="fas fa-comment"></i> Messages</a></li>
+                    <li><a href="messages.html"><i class="fas fa-comment"></i> Messages</a></li>
                     <li class="dropdown">
                         <div class="dropdown-toggle" id="businessDropdown">
                             <i class="fas fa-user-tie"></i> For Business <i class="fas fa-chevron-down"></i>
@@ -1078,6 +1167,27 @@
         </div>
     </div>
 
+    <!-- Connection Request Modal -->
+    <div class="connection-modal" id="connectionModal">
+        <div class="connection-modal-content">
+            <div class="connection-modal-header">
+                <h3 class="connection-modal-title" id="connectionModalTitle">Send Connection Request</h3>
+                <span class="close-modal" data-modal="connectionModal">&times;</span>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="connectionMessage">Add a note (optional):</label>
+                <textarea class="form-textarea" id="connectionMessage" placeholder="Add a personal note to your connection request..."></textarea>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="form-cancel" data-modal="connectionModal">Cancel</button>
+                <button type="button" class="form-submit" id="sendConnectionRequestBtn">Send Request</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
     <!-- Profile Content -->
     <div class="container">
         <div class="profile-container">
@@ -1102,6 +1212,7 @@
                             <button class="btn-secondary">
                                 <i class="fas fa-download"></i> Download Resume
                             </button>
+                            <!-- Connect button will be dynamically added here for other users' profiles -->
                         </div>
                     </div>
                     
@@ -1510,6 +1621,7 @@
             </div>
         </div>
     </div>
+
 <script>
 const API_BASE = "https://landing-render-1.onrender.com/api";
 
@@ -1542,9 +1654,11 @@ const contactModal = document.getElementById('contactModal');
 const personalModal = document.getElementById('personalModal');
 const certificationsModal = document.getElementById('certificationsModal');
 const addSectionModal = document.getElementById('addSectionModal');
+const connectionModal = document.getElementById('connectionModal');
 
 // Profile Data
 let profileData = {};
+let currentProfileUserId = null;
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function() {
@@ -1556,20 +1670,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Load profile data from backend
-// Load profile data from backend
-// Load profile data from backend - FIXED VERSION
 async function loadProfileData() {
     try {
         // Get the user ID from URL parameters
         const urlParams = new URLSearchParams(window.location.search);
-        const profileUserId = urlParams.get('id');
+        currentProfileUserId = urlParams.get('id');
         
-        console.log('📄 Loading profile page. URL ID parameter:', profileUserId);
+        console.log('📄 Loading profile page. URL ID parameter:', currentProfileUserId);
 
         let endpoint;
-        if (profileUserId) {
+        if (currentProfileUserId) {
             // Load OTHER user's profile
-            endpoint = `${API_BASE}/employee/profile/${profileUserId}`;
+            endpoint = `${API_BASE}/employee/profile/${currentProfileUserId}`;
             console.log('👤 Loading OTHER user profile from:', endpoint);
             
             // Disable edit buttons when viewing someone else's profile
@@ -1599,6 +1711,12 @@ async function loadProfileData() {
         const data = await res.json();
         profileData = data;
         fillProfile(data);
+        
+        // If viewing someone else's profile, check connection status
+        if (currentProfileUserId) {
+            checkConnectionStatus(currentProfileUserId);
+        }
+        
     } catch (err) {
         console.error("Profile fetch error:", err);
         if (err.message.includes("401") || err.message.includes("Not authenticated")) {
@@ -1635,6 +1753,13 @@ function disableEditButtons() {
         el.style.cursor = 'default';
         el.classList.remove('editable-text');
     });
+     setTimeout(() => {
+        const emptySectionButtons = document.querySelectorAll('.add-first-btn');
+        emptySectionButtons.forEach(btn => {
+            btn.style.display = 'none';
+        });
+    }, 100);
+
 }
 
 // Enable edit buttons for own profile
@@ -1732,24 +1857,24 @@ function fillProfile(data) {
         `;
     }
     
-if (p.birthday || p.gender || p.languages || p.interests) {
-    personalDetails.innerHTML = `
-        ${p.birthday ? `<p><strong>Birthday:</strong> ${new Date(p.birthday).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</p>` : ''}
-
-        ${p.gender ? `<p><strong>Gender:</strong> ${p.gender}</p>` : ''}
-        ${p.languages ? `<p><strong>Languages:</strong> ${p.languages}</p>` : ''}
-        ${p.interests ? `<p><strong>Interests:</strong> ${p.interests}</p>` : ''}
-    `;
-} else {
-    personalDetails.innerHTML = `
-        <div class="empty-state">
-            <i class="fas fa-user"></i>
-            <p>No personal details added yet</p>
-            <button class="add-first-btn" id="addPersonalDetailsBtn">Add Personal Details</button>
-        </div>
-    `;
-}
-
+    // Personal details
+    const personalDetails = document.getElementById('personalDetails');
+    if (p.birthday || p.gender || p.languages || p.interests) {
+        personalDetails.innerHTML = `
+            ${p.birthday ? `<p><strong>Birthday:</strong> ${new Date(p.birthday).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</p>` : ''}
+            ${p.gender ? `<p><strong>Gender:</strong> ${p.gender}</p>` : ''}
+            ${p.languages ? `<p><strong>Languages:</strong> ${p.languages}</p>` : ''}
+            ${p.interests ? `<p><strong>Interests:</strong> ${p.interests}</p>` : ''}
+        `;
+    } else {
+        personalDetails.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-user"></i>
+                <p>No personal details added yet</p>
+                <button class="add-first-btn" id="addPersonalDetailsBtn">Add Personal Details</button>
+            </div>
+        `;
+    }
     
     // Dynamic lists with empty states
     renderList("experienceList", data.experiences, e => `
@@ -1762,9 +1887,9 @@ if (p.birthday || p.gender || p.languages || p.interests) {
                     <div class="item-date">${formatDate(e.start_date)} - ${e.current ? 'Present' : formatDate(e.end_date)}</div>
                     ${e.location ? `<div class="item-subtitle">${e.location}</div>` : ''}
                 </div>
-                <div class="edit-icon" data-id="${e.id}" data-type="experience">
+                ${!currentProfileUserId ? `<div class="edit-icon" data-id="${e.id}" data-type="experience">
                     <i class="fas fa-pencil-alt"></i>
-                </div>
+                </div>` : ''}
             </div>
             ${e.description ? `<div class="item-description">${e.description}</div>` : ''}
         </div>
@@ -1780,9 +1905,9 @@ if (p.birthday || p.gender || p.languages || p.interests) {
                     <div class="item-date">${formatDate(e.start_date)} - ${e.end_date ? formatDate(e.end_date) : 'Present'}</div>
                     ${e.grade ? `<div class="item-subtitle">Grade: ${e.grade}</div>` : ''}
                 </div>
-                <div class="edit-icon" data-id="${e.id}" data-type="education">
+                ${!currentProfileUserId ? `<div class="edit-icon" data-id="${e.id}" data-type="education">
                     <i class="fas fa-pencil-alt"></i>
-                </div>
+                </div>` : ''}
             </div>
             ${e.description ? `<div class="item-description">${e.description}</div>` : ''}
         </div>
@@ -1802,9 +1927,9 @@ if (p.birthday || p.gender || p.languages || p.interests) {
                     <div class="item-date">Issued ${formatDate(c.issue_date)} ${c.expiration_date ? `• Expires ${formatDate(c.expiration_date)}` : ''}</div>
                     ${c.credential_id ? `<div class="item-subtitle">Credential ID: ${c.credential_id}</div>` : ''}
                 </div>
-                <div class="edit-icon" data-id="${c.id}" data-type="certification">
+                ${!currentProfileUserId ? `<div class="edit-icon" data-id="${c.id}" data-type="certification">
                     <i class="fas fa-pencil-alt"></i>
-                </div>
+                </div>` : ''}
             </div>
         </div>
     `);
@@ -1827,7 +1952,7 @@ function renderList(id, arr, template) {
             <div class="empty-state">
                 <i class="fas fa-${getSectionIcon(id)}"></i>
                 <p>No ${getSectionName(id)} added yet</p>
-                <button class="add-first-btn" id="addFirst${id}Btn">Add Your First ${getSectionName(id)}</button>
+                ${!currentProfileUserId ? `<button class="add-first-btn" id="addFirst${id}Btn">Add Your First ${getSectionName(id)}</button>` : ''}
             </div>
         `;
     }
@@ -1921,6 +2046,9 @@ function setupEventListeners() {
     document.getElementById('contactForm')?.addEventListener('submit', saveContact);
     document.getElementById('personalForm')?.addEventListener('submit', savePersonal);
     document.getElementById('certificationsForm')?.addEventListener('submit', saveCertification);
+    
+    // Connection modal
+    document.getElementById('sendConnectionRequestBtn')?.addEventListener('click', sendConnectionRequest);
     
     // Add section buttons
     document.querySelectorAll('.add-section-btn').forEach(btn => {
@@ -2024,10 +2152,43 @@ function setupEventListeners() {
         e.preventDefault();
         try {
             await fetch(`${API_BASE}/auth/logout`, { method: "POST", credentials: "include" });
-            window.location.href = "index.html";
+            window.location.href = "d.html";
         } catch (err) {
             console.error("Logout error:", err);
-            window.location.href = "index.html";
+            window.location.href = "d.html";
+        }
+    });
+    
+    // Current job checkbox
+    document.getElementById('experienceCurrent')?.addEventListener('change', function() {
+        const endDateField = document.getElementById('experienceEndDate');
+        if (this.checked) {
+            endDateField.disabled = true;
+            endDateField.value = '';
+        } else {
+            endDateField.disabled = false;
+        }
+    });
+    
+    // Current education checkbox
+    document.getElementById('educationCurrent')?.addEventListener('change', function() {
+        const endDateField = document.getElementById('educationEndDate');
+        if (this.checked) {
+            endDateField.disabled = true;
+            endDateField.value = '';
+        } else {
+            endDateField.disabled = false;
+        }
+    });
+    
+    // No expiry checkbox for certifications
+    document.getElementById('certificationNoExpiry')?.addEventListener('change', function() {
+        const expiryField = document.getElementById('certificationExpiry');
+        if (this.checked) {
+            expiryField.disabled = true;
+            expiryField.value = '';
+        } else {
+            expiryField.disabled = false;
         }
     });
 }
@@ -2246,7 +2407,7 @@ async function saveAbout(e) {
     }
 }
 
-// Save experience - FIXED
+// Save experience
 async function saveExperience(e) {
     e.preventDefault();
     try {
@@ -2290,7 +2451,7 @@ async function saveExperience(e) {
     }
 }
 
-// Save education - FIXED
+// Save education
 async function saveEducation(e) {
     e.preventDefault();
     try {
@@ -2407,7 +2568,7 @@ async function saveContact(e) {
     }
 }
 
-
+// Save personal details
 async function savePersonal(e) {
     e.preventDefault();
     
@@ -2426,7 +2587,7 @@ async function savePersonal(e) {
             headers: {
                 "Content-Type": "application/json"
             },
-            credentials: "include", // This is crucial for session-based auth
+            credentials: "include",
             body: JSON.stringify(data)
         });
 
@@ -2445,10 +2606,7 @@ async function savePersonal(e) {
     }
 }
 
-
-
-
-// Save certification - FIXED
+// Save certification
 async function saveCertification(e) {
     e.preventDefault();
     try {
@@ -2605,42 +2763,166 @@ function toggleMobileMenu() {
     document.body.classList.toggle('no-scroll');
 }
 
-// Handle current job checkbox
-document.getElementById('experienceCurrent')?.addEventListener('change', function() {
-    const endDateField = document.getElementById('experienceEndDate');
-    if (this.checked) {
-        endDateField.disabled = true;
-        endDateField.value = '';
-    } else {
-        endDateField.disabled = false;
+// ==================== CONNECTION FUNCTIONALITY ====================
+
+// Add Connect button to profile when viewing someone else's profile
+function addConnectButtonToProfile(userId, userName) {
+    const profileActions = document.querySelector('.profile-actions');
+    if (!profileActions) return;
+    
+    // Remove existing connect button if any
+    const existingBtn = document.getElementById('connectProfileBtn');
+    if (existingBtn) {
+        existingBtn.remove();
     }
-});
-
-// Handle no expiry checkbox for certifications
-document.getElementById('certificationNoExpiry')?.addEventListener('change', function() {
-    const expiryField = document.getElementById('certificationExpiry');
-    if (this.checked) {
-        expiryField.disabled = true;
-        expiryField.value = '';
+    
+    const connectBtn = document.createElement('button');
+    connectBtn.id = 'connectProfileBtn';
+    connectBtn.className = 'btn-primary';
+    connectBtn.innerHTML = '<i class="fas fa-user-plus"></i> Connect';
+    connectBtn.onclick = () => openConnectionModal(userId, userName);
+    
+    // Insert before the download resume button
+    const downloadBtn = profileActions.querySelector('.btn-secondary');
+    if (downloadBtn) {
+        profileActions.insertBefore(connectBtn, downloadBtn);
     } else {
-        expiryField.disabled = false;
+        profileActions.appendChild(connectBtn);
     }
-});
+}
 
+// Open connection modal
+function openConnectionModal(userId, userName) {
+    document.getElementById('connectionModalTitle').textContent = `Connect with ${userName}`;
+    document.getElementById('connectionMessage').value = '';
+    openModal('connectionModal');
+}
 
+// Send connection request
+async function sendConnectionRequest() {
+    try {
+        const message = document.getElementById('connectionMessage').value;
+        
+        const res = await fetch(`${API_BASE}/connections/request`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                toUserId: currentProfileUserId,
+                message: message
+            })
+        });
 
-// Handle current education checkbox
-document.getElementById('educationCurrent')?.addEventListener('change', function() {
-    const endDateField = document.getElementById('educationEndDate');
-    if (this.checked) {
-        endDateField.disabled = true;
-        endDateField.value = '';
-    } else {
-        endDateField.disabled = false;
+        const data = await res.json();
+
+        if (data.success) {
+            closeModal('connectionModal');
+            updateProfileConnectButton({ connectionSent: true });
+            showToast('Connection request sent successfully!', 'success');
+        } else {
+            throw new Error(data.error || 'Failed to send connection request');
+        }
+
+    } catch (error) {
+        console.error('Error sending connection request:', error);
+        showToast(error.message || 'Failed to send connection request', 'error');
     }
-});
+}
+
+// Check connection status with another user
+async function checkConnectionStatus(otherUserId) {
+    try {
+        const res = await fetch(`${API_BASE}/connections/status/${otherUserId}`, {
+            credentials: 'include'
+        });
+        
+        if (res.ok) {
+            const status = await res.json();
+            updateProfileConnectButton(status);
+        }
+    } catch (error) {
+        console.error('Error checking connection status:', error);
+    }
+}
+
+// Update profile connect button based on connection status
+function updateProfileConnectButton(status) {
+    const connectBtn = document.getElementById('connectProfileBtn');
+    if (!connectBtn) return;
+    
+    if (status.isConnected) {
+        connectBtn.innerHTML = '<i class="fas fa-check"></i> Connected';
+        connectBtn.className = 'btn-success';
+        connectBtn.disabled = true;
+        connectBtn.onclick = null;
+    } else if (status.connectionSent) {
+        connectBtn.innerHTML = '<i class="fas fa-clock"></i> Request Sent';
+        connectBtn.className = 'btn-disabled';
+        connectBtn.disabled = true;
+        connectBtn.onclick = null;
+    } else if (status.connectionReceived) {
+        connectBtn.innerHTML = '<i class="fas fa-user-check"></i> Accept Request';
+        connectBtn.className = 'btn-success';
+        connectBtn.onclick = () => acceptConnectionRequest(status.receivedRequestId);
+    }
+    // If no connection exists, button remains "Connect" with original functionality
+}
+
+// Accept connection request
+async function acceptConnectionRequest(requestId) {
+    try {
+        const res = await fetch(`${API_BASE}/connections/accept`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({ requestId })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            updateProfileConnectButton({ isConnected: true });
+            showToast('Connection request accepted!', 'success');
+            
+            // Reload profile to update connections count
+            loadProfileData();
+        } else {
+            throw new Error(data.error || 'Failed to accept request');
+        }
+
+    } catch (error) {
+        console.error('Error accepting request:', error);
+        showToast(error.message || 'Failed to accept connection request', 'error');
+    }
+}
+
+// Show toast notification
+function showToast(message, type = 'info') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = `toast ${type} show`;
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000);
+}
+
+// Update fillProfile to include connection button for other users
+const originalFillProfile = fillProfile;
+fillProfile = function(data) {
+    originalFillProfile(data);
+    
+    // Add connect button if viewing someone else's profile
+    if (currentProfileUserId) {
+        const user = data.user || {};
+        addConnectButtonToProfile(currentProfileUserId, user.name);
+    }
+};
 </script>
 
 </body>
 </html>
-
